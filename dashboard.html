@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0D4F4F">
+  <meta name="saans-title-key" content="nav.home">
+  <title>Dashboard</title>
+
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body data-page="dashboard" data-shell="app">
+
+  <div class="page-shell">
+    <main class="page-main page-main--full" id="app-root">
+      <div class="dash-layout">
+        <aside class="dash-sidebar ui-card" style="border-radius:0; min-height:200px; background:linear-gradient(180deg,#0D4F4F,#2A9D8F); color:#fff; border:none;">
+          <p data-i18n="common.comingSoon"></p>
+        </aside>
+        <div class="dash-content">
+          <h1 data-i18n="nav.home"></h1>
+          <p data-i18n="common.comingSoon"></p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/translations.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/header.js"></script>
+  <script src="js/footer.js"></script>
+  <script src="js/bottom-nav.js"></script>
+  <script src="js/chat-bubble.js"></script>
+  <script src="js/shell.js"></script>
+  <script src="js/bootstrap.js"></script>
+</body>
+</html>

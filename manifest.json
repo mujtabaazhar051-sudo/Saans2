@@ -1,0 +1,27 @@
+{
+  "name": "سانس — Saans",
+  "short_name": "سانس",
+  "description": "Pakistan's free quit-smoking companion",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F8F7F4",
+  "theme_color": "#0D4F4F",
+  "lang": "ur",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "assets/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

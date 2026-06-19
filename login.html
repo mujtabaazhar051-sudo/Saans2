@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0D4F4F">
+  <meta name="saans-title-key" content="landing.cta.start">
+  <title>Login</title>
+
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <style>
+    .auth-page {
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: calc(var(--header-h) + var(--space-6)) var(--space-4) var(--space-8);
+      background: linear-gradient(160deg, #0D4F4F 0%, #2A9D8F 100%);
+    }
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--color-surface);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+    }
+  </style>
+</head>
+<body data-page="login" data-shell="auth">
+  <div class="page-shell">
+    <main class="auth-page" id="app-root">
+      <div class="auth-card">
+        <img src="assets/logo.svg" alt="" width="64" height="64" style="margin:0 auto var(--space-4); border-radius:16px;">
+        <h1 data-i18n="landing.cta.start"></h1>
+        <p data-i18n="common.comingSoon" style="color:var(--color-text-muted); margin-bottom:var(--space-6);"></p>
+        <a class="ui-btn ui-btn--primary" href="dashboard.html" data-i18n="nav.home"></a>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/translations.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/header.js"></script>
+  <script src="js/footer.js"></script>
+  <script src="js/bottom-nav.js"></script>
+  <script src="js/chat-bubble.js"></script>
+  <script src="js/shell.js"></script>
+  <script src="js/bootstrap.js"></script>
+</body>
+</html>
