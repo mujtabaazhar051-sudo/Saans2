@@ -92,7 +92,19 @@
   function updateApiNotice() {
     var notice = el('chatApiNotice');
     if (!notice) return;
-    notice.classList.toggle('is-visible', !hasCoachApiKey());
+    if (typeof hasCoachApiKey === 'function' && hasCoachApiKey()) {
+      notice.classList.remove('is-visible');
+      return;
+    }
+    if (typeof coachNeedsLogin === 'function' && coachNeedsLogin()) {
+      notice.classList.add('is-visible');
+      notice.innerHTML = '<span data-i18n="chat.loginNotice"></span> <a href="' + saansHref('login.html') + '" data-i18n="chat.loginLink"></a>';
+      applyI18nDOM();
+      return;
+    }
+    notice.innerHTML = '<span data-i18n="chat.apiNotice"></span> <a href="' + saansHref('settings.html') + '" id="chatApiLink" data-i18n="chat.apiNoticeLink"></a>';
+    applyI18nDOM();
+    notice.classList.toggle('is-visible', typeof hasCoachApiKey === 'function' && !hasCoachApiKey());
   }
 
   async function sendMessage() {
@@ -102,7 +114,11 @@
 
     if (!hasCoachApiKey()) {
       updateApiNotice();
-      showToast(t('chat.noKey'));
+      if (typeof coachNeedsLogin === 'function' && coachNeedsLogin()) {
+        showToast(t('chat.loginRequired'));
+      } else {
+        showToast(t('chat.noKey'));
+      }
       return;
     }
 
@@ -120,6 +136,9 @@
       hideTyping();
       if (result.text) {
         appendBubble('coach', result.text);
+      } else if (result.error === 'login_required') {
+        updateApiNotice();
+        appendBubble('coach', t('chat.loginRequired'));
       } else if (result.error === 'no_key') {
         updateApiNotice();
         appendBubble('coach', t('chat.noKeyReply'));

@@ -28,8 +28,14 @@
       measurementId:     'G-7HBVT7Y3P7',
     },
 
-    /** Anthropic — wired in Phase 5 */
+    /** Anthropic — model name; key lives in Firebase Cloud Function (see docs/COACH-SETUP.md) */
     ANTHROPIC_MODEL: 'claude-sonnet-4-20250514',
+
+    /** Coach mode: 'cloud' = Firebase function only, 'local' = user API key, 'auto' = try cloud then local */
+    COACH_MODE: 'auto',
+
+    /** Firebase Cloud Function region for coachChat */
+    FUNCTIONS_REGION: 'us-central1',
 
     /** PWA / theme */
     THEME_COLOR: '#0D4F4F',

@@ -20,17 +20,6 @@
     if (SAANS_CONFIG.GA_MEASUREMENT_ID && typeof gtag === 'function') {
       gtag('config', SAANS_CONFIG.GA_MEASUREMENT_ID, { page_path: window.location.pathname });
     }
-
-    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-      navigator.serviceWorker.getRegistrations().then(function (regs) {
-        regs.forEach(function (r) { r.unregister(); });
-      });
-      if (window.caches && caches.keys) {
-        caches.keys().then(function (keys) {
-          keys.forEach(function (k) { caches.delete(k); });
-        });
-      }
-    }
   }
 
   if (document.readyState === 'loading') {
@@ -40,4 +29,10 @@
   }
 
   window.SaansBoot = { boot: boot };
+})();
+(function () {
+  if (location.protocol === 'file:') return;
+  var s = document.createElement('script');
+  s.src = (typeof saansPath === 'function' ? saansPath('js/pwa.js') : 'js/pwa.js') + '?v=8';
+  document.body.appendChild(s);
 })();

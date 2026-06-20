@@ -1,5 +1,5 @@
 /**
- * Saans — AI coach (Anthropic API)
+ * Saans — AI coach (Anthropic via Cloud Function or local key)
  */
 (function () {
   'use strict';
@@ -43,11 +43,45 @@
       'For medical emergencies recommend 1122 or a doctor. Never encourage smoking.';
   };
 
-  window.sendCoachMessage = async function (userText, history, lang) {
+  function coachMode() {
+    return (SAANS_CONFIG && SAANS_CONFIG.COACH_MODE) || 'auto';
+  }
+
+  function sendViaCloud(userText, history, lang) {
+    return new Promise(function (resolve) {
+      if (typeof onFirebaseReady !== 'function' || typeof getCoachCallable !== 'function') {
+        resolve({ error: 'cloud_unavailable' });
+        return;
+      }
+      onFirebaseReady(function () {
+        var callable = getCoachCallable();
+        if (!callable) {
+          resolve({ error: 'cloud_unavailable' });
+          return;
+        }
+        var user = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+        if (!user) {
+          resolve({ error: 'login_required' });
+          return;
+        }
+        callable({
+          message: userText,
+          history: history || [],
+          lang: lang,
+          system: buildCoachSystemPrompt(lang),
+        }).then(function (res) {
+          if (res.data && res.data.text) resolve({ text: res.data.text });
+          else resolve({ error: 'unknown' });
+        }).catch(function (err) {
+          resolve({ error: (err && err.message) || 'cloud_failed' });
+        });
+      });
+    });
+  }
+
+  async function sendViaLocalKey(userText, history, lang) {
     var apiKey = LS.get('anthropicApiKey', '');
-    if (!apiKey) {
-      return { error: 'no_key' };
-    }
+    if (!apiKey) return { error: 'no_key' };
 
     var model = (SAANS_CONFIG && SAANS_CONFIG.ANTHROPIC_MODEL) || 'claude-sonnet-4-20250514';
     var messages = (history || []).map(function (m) {
@@ -72,17 +106,39 @@
     });
 
     var data = await response.json();
-
     if (data.content && data.content[0] && data.content[0].text) {
       return { text: data.content[0].text };
     }
-    if (data.error && data.error.message) {
-      return { error: data.error.message };
-    }
+    if (data.error && data.error.message) return { error: data.error.message };
     return { error: 'unknown' };
+  }
+
+  window.sendCoachMessage = async function (userText, history, lang) {
+    var mode = coachMode();
+
+    if (mode === 'cloud' || mode === 'auto') {
+      var cloud = await sendViaCloud(userText, history, lang);
+      if (cloud.text) return cloud;
+      if (mode === 'cloud') return cloud;
+      if (cloud.error === 'login_required') return cloud;
+    }
+
+    return sendViaLocalKey(userText, history, lang);
   };
 
   window.hasCoachApiKey = function () {
+    var mode = coachMode();
+    if (mode === 'cloud') {
+      return typeof getCurrentUser === 'function' && !!getCurrentUser();
+    }
+    if (mode === 'auto') {
+      return !!LS.get('anthropicApiKey', '') || (typeof getCurrentUser === 'function' && !!getCurrentUser());
+    }
     return !!LS.get('anthropicApiKey', '');
+  };
+
+  window.coachNeedsLogin = function () {
+    var mode = coachMode();
+    return (mode === 'cloud' || mode === 'auto') && !(getCurrentUser && getCurrentUser());
   };
 })();

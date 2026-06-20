@@ -138,6 +138,7 @@
     if (motivVal) LS.set('motivation', motivVal);
     if (triggers.length) LS.set('triggers', triggers);
     LS.set('onboardingDone', true);
+    LS.set('onboardingSuccess', true);
 
     var overlay = el('obOverlay');
     if (overlay) {
@@ -148,7 +149,9 @@
       }, 400);
     }
 
-    showToast(t('onboarding.toastDone'));
+    if (typeof window.showOnboardingSuccess === 'function') {
+      setTimeout(window.showOnboardingSuccess, 450);
+    }
     if (typeof window.refreshDashboard === 'function') refreshDashboard();
     var user = getCurrentUser && getCurrentUser();
     if (user && typeof syncToCloud === 'function') syncToCloud(user);

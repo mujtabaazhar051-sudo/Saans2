@@ -64,6 +64,24 @@
     applyI18nDOM();
   }
 
+  function showOnboardingSuccessBanner() {
+    if (!LS.get('onboardingSuccess', false)) return;
+    var banner = $('onboardingSuccessBanner');
+    if (!banner) return;
+    banner.hidden = false;
+    applyI18nDOM();
+    var btn = $('onboardingSuccessDismiss');
+    if (btn && !btn._wired) {
+      btn._wired = true;
+      btn.addEventListener('click', function () {
+        banner.hidden = true;
+        LS.set('onboardingSuccess', false);
+      });
+    }
+  }
+
+  window.showOnboardingSuccess = showOnboardingSuccessBanner;
+
   function refreshSetupBar() {
     var saved = LS.get('quitDate', '');
     var setup = $('setupBar');
@@ -257,6 +275,7 @@
 
     requireAuth(function (user) {
       SaansOnboarding.init();
+      showOnboardingSuccessBanner();
       refreshDashboard();
       syncFromCloud(user).finally(function () {
         refreshDashboard();

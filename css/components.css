@@ -422,25 +422,25 @@ html[lang="en"] .saans-chat-bubble {
 /* ── Toast ── */
 .saans-toast {
   position: fixed;
+  left: 50%;
   bottom: calc(var(--bottom-nav-h) + var(--safe-bottom) + 16px);
-  inset-inline: 50%;
-  transform: translateX(-50%) translateY(20px);
+  transform: translateX(-50%) translateY(24px);
   z-index: var(--z-toast);
-  background: var(--color-text);
-  color: var(--color-text-inverse);
-  font-family: var(--font-ui);
-  font-size: var(--text-sm);
-  padding: 12px 20px;
-  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-urdu), var(--font-ui);
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: 1.55;
+  padding: 14px 22px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
   opacity: 0;
   visibility: hidden;
   transition: opacity var(--duration-normal), transform var(--duration-normal), visibility var(--duration-normal);
-  max-width: calc(100vw - 32px);
+  max-width: min(92vw, 420px);
   text-align: center;
-}
-
-html[dir="rtl"] .saans-toast {
-  transform: translateX(50%) translateY(20px);
+  pointer-events: none;
 }
 
 .saans-toast.is-visible {
@@ -449,12 +449,47 @@ html[dir="rtl"] .saans-toast {
   transform: translateX(-50%) translateY(0);
 }
 
-html[dir="rtl"] .saans-toast.is-visible {
-  transform: translateX(50%) translateY(0);
-}
-
 .page-shell:not(.page-shell--app) .saans-toast {
   bottom: calc(16px + var(--safe-bottom));
+}
+
+/* ── PWA install banner ── */
+.saans-install-banner {
+  position: fixed;
+  bottom: calc(var(--bottom-nav-h) + var(--safe-bottom) + 8px);
+  inset-inline: var(--space-4);
+  z-index: calc(var(--z-toast) - 1);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+.page-shell:not(.page-shell--app) ~ .saans-install-banner,
+body:not([data-shell="app"]) .saans-install-banner {
+  bottom: calc(16px + var(--safe-bottom));
+}
+.saans-install-banner[hidden] { display: none !important; }
+.saans-install-banner__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+.saans-install-banner__text strong {
+  color: var(--color-text);
+  font-size: var(--text-base);
+}
+.saans-install-banner__actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
 }
 
 /* ── Landing hero (Phase 1 preview) ── */

@@ -4,7 +4,7 @@
 (function () {
   'use strict';
 
-  var _auth, _db;
+  var _auth, _db, _functions;
   var _firebaseReady = false;
   var _firebaseFailed = false;
   var _callbacks = [];
@@ -49,6 +49,10 @@
       }
       _auth = firebase.auth();
       _db = firebase.firestore();
+      if (typeof firebase.functions === 'function') {
+        var region = (SAANS_CONFIG && SAANS_CONFIG.FUNCTIONS_REGION) || 'us-central1';
+        _functions = firebase.app().functions(region);
+      }
       markReady();
     } catch (e) {
       markFailed(e.message || 'Firebase init failed');
@@ -81,6 +85,7 @@
       'https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js',
       'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js',
       'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js',
+      'https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js',
     ];
 
     (async function () {
@@ -189,6 +194,11 @@
   };
 
   window.getSaansDb = function () { return _db; };
+
+  window.getCoachCallable = function () {
+    if (!_functions || typeof firebase === 'undefined') return null;
+    return _functions.httpsCallable('coachChat');
+  };
 
   initFirebase();
 })();

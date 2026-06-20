@@ -1,4 +1,36 @@
 /* Saans — dashboard */
+
+.dash-success-banner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  background: linear-gradient(135deg, #e8f7f4 0%, #d4f0ea 100%);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  margin-bottom: var(--space-5);
+  box-shadow: var(--shadow-md);
+}
+
+.dash-success-banner[hidden] { display: none !important; }
+
+.dash-success-banner__title {
+  font-family: var(--font-urdu), var(--font-ui);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+
+.dash-success-banner__text {
+  font-family: var(--font-urdu), var(--font-ui);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
 .dash-sidebar {
   background: linear-gradient(180deg, #0D4F4F 0%, #1a6b63 55%, #2A9D8F 100%);
   color: var(--color-text-inverse);

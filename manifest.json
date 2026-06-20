@@ -1,8 +1,8 @@
 {
-  "name": "سانس — Saans",
+  "name": "سانس — Saans Quit Smoking",
   "short_name": "سانس",
-  "description": "Pakistan's free quit-smoking companion",
-  "start_url": "./index.html",
+  "description": "Pakistan's free bilingual quit-smoking companion",
+  "start_url": "./dashboard.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
@@ -10,6 +10,7 @@
   "theme_color": "#0D4F4F",
   "lang": "ur",
   "dir": "rtl",
+  "categories": ["health", "lifestyle"],
   "icons": [
     {
       "src": "assets/logo.svg",
@@ -22,6 +23,23 @@
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "url": "./dashboard.html",
+      "description": "Open your quit dashboard"
+    },
+    {
+      "name": "AI Coach",
+      "url": "./chat.html",
+      "description": "Talk to Saans Coach"
+    },
+    {
+      "name": "Tracker",
+      "url": "./tracker.html",
+      "description": "Log today's check-in"
     }
   ]
 }
