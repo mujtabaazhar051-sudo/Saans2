@@ -9,6 +9,7 @@
   var quitVal = '';
   var motivVal = '';
   var triggers = [];
+  var wired = false;
 
   var QUIT_OPTS = [
     { val: 'decided', icon: '✅', key: 'onboarding.quit.decided' },
@@ -111,13 +112,8 @@
       chip.textContent = label;
       chip.addEventListener('click', function () {
         var idx = triggers.indexOf(label);
-        if (idx >= 0) {
-          triggers.splice(idx, 1);
-          chip.classList.remove('is-selected');
-        } else {
-          triggers.push(label);
-          chip.classList.add('is-selected');
-        }
+        if (idx >= 0) { triggers.splice(idx, 1); chip.classList.remove('is-selected'); }
+        else { triggers.push(label); chip.classList.add('is-selected'); }
       });
       wrap.appendChild(chip);
     });
@@ -155,7 +151,7 @@
     showToast(t('onboarding.toastDone'));
     if (typeof window.refreshDashboard === 'function') refreshDashboard();
     var user = getCurrentUser && getCurrentUser();
-    if (user) syncToCloud(user);
+    if (user && typeof syncToCloud === 'function') syncToCloud(user);
   }
 
   function next() {
@@ -176,8 +172,16 @@
     }
   }
 
+  function wireButtons() {
+    if (wired) return;
+    wired = true;
+    if (el('obNextBtn')) el('obNextBtn').addEventListener('click', next);
+    if (el('obBackBtn')) el('obBackBtn').addEventListener('click', back);
+    if (el('obSkipBtn')) el('obSkipBtn').addEventListener('click', finish);
+  }
+
   function applyStaticLabels() {
-    applyI18nDOM();
+    if (typeof applyI18nDOM === 'function') applyI18nDOM();
     if (el('obWelcomeH')) el('obWelcomeH').textContent = t('onboarding.welcome.title');
     if (el('obWelcomeP')) el('obWelcomeP').textContent = t('onboarding.welcome.body');
     if (el('obNameLabel')) el('obNameLabel').textContent = t('onboarding.name');
@@ -192,25 +196,30 @@
 
   window.SaansOnboarding = {
     init: function () {
+      wireButtons();
+
       if (LS.get('onboardingDone', false)) {
         var overlay = el('obOverlay');
         if (overlay) overlay.style.display = 'none';
         return;
       }
+
+      var overlay = el('obOverlay');
+      if (overlay) overlay.style.display = 'flex';
+
       if (el('obQuitDate')) el('obQuitDate').value = todayISO();
       applyStaticLabels();
       showStep(0);
       updateHeader();
 
-      if (el('obNextBtn')) el('obNextBtn').addEventListener('click', next);
-      if (el('obBackBtn')) el('obBackBtn').addEventListener('click', back);
-      if (el('obSkipBtn')) el('obSkipBtn').addEventListener('click', finish);
-
-      onLangChange(function () {
-        applyStaticLabels();
-        updateHeader();
-        showStep(step);
-      });
+      if (!window._obLangHook) {
+        window._obLangHook = true;
+        onLangChange(function () {
+          applyStaticLabels();
+          updateHeader();
+          showStep(step);
+        });
+      }
     },
     restart: function () {
       LS.set('onboardingDone', false);
@@ -218,6 +227,7 @@
       quitVal = '';
       motivVal = '';
       triggers = [];
+      wireButtons();
       var overlay = el('obOverlay');
       if (overlay) overlay.style.display = 'flex';
       applyStaticLabels();

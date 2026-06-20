@@ -28,6 +28,7 @@ const TRANSLATIONS = {
     'auth.google': 'Google سے جاری رکھیں',
     'auth.continueApp': 'ڈیش بورڈ پر جائیں', 'auth.signout': 'لاگ آؤٹ',
     'auth.firebaseLoading': 'سسٹم لوڈ ہو رہا ہے… براہ کرم انتظار کریں',
+    'auth.firebaseLoadError': 'لاگ ان لوڈ نہیں ہو سکا۔ انٹرنیٹ چیک کریں اور صفحہ ریفریش کریں۔',
     'auth.welcomeBack': 'خوش آمدید! ڈیٹا لوڈ ہو رہا ہے…',
     'auth.welcomeNew': 'اکاؤنٹ بن گیا! خوش آمدید 🎉',
     'auth.forgotSent': '✓ پاس ورڈ ری سیٹ ای میل بھیجی گئی',
@@ -40,6 +41,7 @@ const TRANSLATIONS = {
     'auth.error.auth.invalid-email': 'ای میل درست نہیں',
     'auth.error.auth.popup-closed-by-user': 'Google لاگ ان منسوخ ہوا',
     'auth.error.auth.network-request-failed': 'انٹرنیٹ کنکشن چیک کریں',
+    'auth.error.auth.not-ready': 'سسٹم ابھی لوڈ ہو رہا ہے — تھوڑی دیر بعد کوشش کریں',
     'auth.error.default': 'کچھ مسئلہ ہوا — دوبارہ کوشش کریں',
 
     'onboarding.next': 'آگے', 'onboarding.finish': 'شروع کریں!', 'onboarding.skip': 'چھوڑیں',
@@ -134,6 +136,7 @@ const TRANSLATIONS = {
     'auth.google': 'Continue with Google',
     'auth.continueApp': 'Go to Dashboard', 'auth.signout': 'Sign Out',
     'auth.firebaseLoading': 'Loading sign-in… please wait',
+    'auth.firebaseLoadError': 'Could not load sign-in. Check internet and refresh the page.',
     'auth.welcomeBack': 'Welcome back! Loading your data…',
     'auth.welcomeNew': 'Account created! Welcome 🎉',
     'auth.forgotSent': '✓ Password reset email sent',
@@ -146,6 +149,7 @@ const TRANSLATIONS = {
     'auth.error.auth.invalid-email': 'Invalid email address',
     'auth.error.auth.popup-closed-by-user': 'Google sign-in cancelled',
     'auth.error.auth.network-request-failed': 'Check your internet connection',
+    'auth.error.auth.not-ready': 'Still loading — please wait a moment and try again',
     'auth.error.default': 'Something went wrong — please try again',
 
     'onboarding.next': 'Next', 'onboarding.finish': 'Let\'s Go!', 'onboarding.skip': 'Skip',

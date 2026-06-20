@@ -240,6 +240,9 @@
     initAnalytics();
     buildToolsGrid();
 
+    /* Onboarding works immediately — do not wait for Firebase/cloud sync */
+    SaansOnboarding.init();
+
     $('setupSaveBtn').addEventListener('click', function () {
       var val = $('quitDateInput').value;
       if (!val) return;
@@ -256,8 +259,9 @@
     });
 
     requireAuth(function (user) {
+      refreshDashboard();
+      /* Cloud sync in background — must not block onboarding */
       syncFromCloud(user).finally(function () {
-        SaansOnboarding.init();
         refreshDashboard();
         syncToCloud(user);
       });

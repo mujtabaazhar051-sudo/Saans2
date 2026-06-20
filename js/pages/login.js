@@ -165,6 +165,13 @@
     });
 
     setFirebaseLoading(true);
+
+    window.addEventListener('saans:firebase-error', function (ev) {
+      setFirebaseLoading(false);
+      var msg = (ev.detail && ev.detail.message) || t('auth.firebaseLoadError');
+      showMsg(msg, 'error');
+    });
+
     onFirebaseReady(function () {
       setFirebaseLoading(false);
       onAuthChange(function (user) {

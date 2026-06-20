@@ -22,7 +22,10 @@
     }
 
     if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-      navigator.serviceWorker.register(saansPath('sw.js')).catch(function () { /* offline dev */ });
+      /* Unregister old SW that cached broken JS — re-enable in Phase 6 */
+      navigator.serviceWorker.getRegistrations().then(function (regs) {
+        regs.forEach(function (r) { r.unregister(); });
+      });
     }
   }
 
