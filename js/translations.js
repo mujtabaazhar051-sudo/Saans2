@@ -109,6 +109,62 @@ const TRANSLATIONS = {
     'tools.motivation': 'موٹیویشن', 'tools.tips': 'مشورے', 'tools.stories': 'کہانیاں', 'tools.nrt': 'نکوٹین',
     'tools.helplines': 'ہیلپ لائن', 'tools.resources': 'وسائل', 'tools.leaderboard': 'لیڈر بورڈ',
 
+    'tools.noQuitDate.title': 'تاریخ سیٹ نہیں', 'tools.noQuitDate.desc': 'پہلے ڈیش بورڈ پر چھوڑنے کی تاریخ سیٹ کریں۔', 'tools.noQuitDate.btn': 'ڈیش بورڈ پر جائیں',
+
+    'tracker.title': 'عادت ٹریکر', 'tracker.sub': 'روزانہ پیش رفت ٹریک کریں',
+    'tracker.streak': 'سٹریک', 'tracker.days': 'کل دن', 'tracker.clean': 'صاف دن',
+    'tracker.checkinTitle': 'آج کا چیک‑ان', 'tracker.checkinSub': 'کیا آج سگریٹ فری رہے؟',
+    'tracker.checkLabel': 'ہاں، آج سگریٹ فری', 'tracker.checkSave': 'محفوظ کریں', 'tracker.checkSaved': '✓ آج لاگ ہو چکا',
+    'tracker.heatmap': '16 ہفتے کا نقشہ', 'tracker.recent': 'حالیہ 14 دن',
+    'tracker.statusFree': 'سگریٹ فری', 'tracker.statusSmoked': 'سگریٹ پی', 'tracker.statusNone': 'لاگ نہیں',
+    'tracker.saveDay': 'محفوظ', 'tracker.saved': '✓ محفوظ!', 'tracker.relapse': 'آج سگریٹ پی؟', 'tracker.relapseBtn': '🚬 لاگ کریں', 'tracker.relapseLogged': 'لاگ ہو گیا — ہمت رکھیں',
+    'tracker.shareTitle': 'پیش رفت شیئر کریں', 'tracker.shareSub': 'دوستوں کو ترغیب دیں', 'tracker.shareBtn': 'WhatsApp ↗',
+
+    'savings.title': 'بچت کیلکولیٹر', 'savings.sub': 'سگریٹ چھوڑ کر کتنے پیسے بچائے؟',
+    'savings.total': 'کل بچت', 'savings.habits': 'آپ کی عادت', 'savings.cpd': 'روزانہ سگریٹ', 'savings.packPrice': 'پیکٹ کی قیمت', 'savings.cigsPerPack': 'سگریٹ فی پیکٹ',
+    'savings.recalc': 'دوبارہ حساب', 'savings.recalcDone': '✓ حساب تازہ!', 'savings.breakdown': 'وقت کے ساتھ بچت',
+    'savings.period.day': 'روزانہ', 'savings.period.week': 'ہفتہ وار', 'savings.period.month': 'ماہانہ', 'savings.period.year': 'سالانہ',
+    'savings.cigsAvoided': 'سگریٹ نہیں پیے', 'savings.buysTitle': 'آپ خرید سکتے ہیں', 'savings.unlocked': '✓ آپ کر سکتے ہیں', 'savings.locked': 'ابھی نہیں',
+    'savings.shareTitle': 'بچت شیئر کریں', 'savings.shareSub': 'دوستوں کو دکھائیں', 'savings.shareBtn': 'WhatsApp ↗',
+
+    'badges.title': 'آپ کی کامیابیاں', 'badges.sub': 'ہر قدم پر ایک نیا بیج',
+    'badges.earnedLabel': 'حاصل', 'badges.totalLabel': 'کل', 'badges.daysLabel': 'دن',
+    'badges.timeSection': 'وقت', 'badges.milestoneSection': 'سنگ میل', 'badges.streakSection': 'سٹریک',
+    'badges.earned': '✓ حاصل', 'badges.locked': '🔒 مقفل', 'badges.newToast': '🎉 نیا بیج!',
+    'badges.shareTitle': 'بیجز شیئر کریں', 'badges.shareSub': 'کامیابی دکھائیں', 'badges.shareBtn': 'WhatsApp ↗',
+
+    'health.title': 'صحت کا سفر', 'health.sub': 'سگریٹ چھوڑنے کے بعد جسم ٹھیک ہو رہا ہے',
+    'health.daysLabel': 'دن سگریٹ فری', 'health.latest': 'تازہ ترین کامیابی', 'health.progress': 'صحت کی بحالی', 'health.timeline': 'کامیابیوں کا سفر',
+
+    'motivation.title': 'روزانہ موٹیویشن', 'motivation.sub': 'آج کا پیغام',
+    'motivation.personal': 'آپ کی وجہ', 'motivation.fav': '❤️ پسندیدہ', 'motivation.unfav': '✓ پسندیدہ', 'motivation.favsTitle': 'پسندیدہ اقتباس', 'motivation.noFavs': 'ابھی کوئی پسندیدہ نہیں', 'motivation.share': 'شیئر ↗',
+
+    'tips.title': 'ماہر مشورے', 'tips.sub': 'سگریٹ چھوڑنے کے مفید مشورے',
+
+    'stories.title': 'کامیابی کی کہانیاں', 'stories.sub': 'پاکستان میں کامیاب لوگ', 'stories.days': 'دن',
+    'stories.submitTitle': 'اپنی کہانی شیئر کریں', 'stories.namePh': 'آپ کا نام', 'stories.daysPh': 'دن', 'stories.textPh': 'آپ کی کہانی…', 'stories.submit': 'جمع کریں',
+    'stories.fillAll': 'تمام خانے بھریں', 'stories.thanks': '✓ شکریہ!',
+
+    'nicotine.title': 'نکوٹین تھیراپی', 'nicotine.sub': 'NRT کے بارے میں جانیں', 'nicotine.gum': 'گم', 'nicotine.patch': 'پچ',
+    'nicotine.pros': 'فائدے', 'nicotine.cons': 'نقصان', 'nicotine.quizTitle': 'کون سا آپ کے لیے؟', 'nicotine.quizStart': 'کوئز شروع کریں', 'nicotine.quizRestart': 'دوبارہ',
+
+    'helplines.title': 'ہیلپ لائنز', 'helplines.sub': 'Pakistan — فوری مدد', 'helplines.lines': 'ہیلپ لائنز', 'helplines.hospitals': 'ہسپتال',
+
+    'resources.title': 'وسائل', 'resources.sub': 'کتابیں، ویب سائٹس، ویڈیوز',
+    'resources.tab.books': '📚 کتابیں', 'resources.tab.websites': '🔗 ویب', 'resources.tab.videos': '▶️ ویڈیوز',
+
+    'leaderboard.title': 'لیڈر بورڈ', 'leaderboard.sub': 'Pakistan — گمنام درجہ بندی', 'leaderboard.privacy': '🔒 مکمل گمنام — صرف نام اور سٹریک',
+    'leaderboard.loading': '⏳ لوڈ…', 'leaderboard.empty': 'ابھی ڈیٹا نہیں', 'leaderboard.you': 'آپ',
+    'leaderboard.streak': 'سٹریک', 'leaderboard.days': 'دن', 'leaderboard.tab.streak': '🔥 سٹریک', 'leaderboard.tab.days': '📅 کل دن',
+
+    'breathing.title': 'سانس کی مشق', 'breathing.sub': 'خواہش میں فوری مدد', 'breathing.tech478': '4-7-8', 'breathing.techBox': 'باکس',
+    'breathing.ready': 'تیار؟', 'breathing.start': 'شروع', 'breathing.pause': 'روکیں', 'breathing.reset': 'ری سیٹ', 'breathing.cycles': 'چکر',
+    'breathing.phase.inhale': 'سانس اندر', 'breathing.phase.hold': 'روکیں', 'breathing.phase.exhale': 'سانس باہر',
+
+    'about.title': 'ہمارے بارے میں', 'about.sub': 'سانس — پاکستان کے لیے مفت ساتھی', 'about.mission': 'ہمارا مقصد',
+    'about.missionText': 'سانس پاکستانیوں کو سگریٹ چھوڑنے میں مدد دیتا ہے — مفت، اردو/انگریزی، اور آپ کی رازداری کے ساتھ۔',
+    'about.contact': 'رابطہ', 'about.contactPh': 'آپ کا پیغام…', 'about.contactBtn': 'بھیجیں', 'about.fillMsg': 'پیغام لکھیں', 'about.thanks': '✓ شکریہ!',
+
     'settings.title': 'ترتیبات', 'settings.redoOnboarding': 'آن بورڈنگ دوبارہ کریں',
   },
 
@@ -217,6 +273,62 @@ const TRANSLATIONS = {
     'tools.tracker': 'Tracker', 'tools.savings': 'Savings', 'tools.badges': 'Badges', 'tools.health': 'Health',
     'tools.motivation': 'Motivation', 'tools.tips': 'Tips', 'tools.stories': 'Stories', 'tools.nrt': 'NRT',
     'tools.helplines': 'Helplines', 'tools.resources': 'Resources', 'tools.leaderboard': 'Leaderboard',
+
+    'tools.noQuitDate.title': 'No quit date set', 'tools.noQuitDate.desc': 'Set your quit date on the dashboard first.', 'tools.noQuitDate.btn': 'Go to dashboard',
+
+    'tracker.title': 'Habit Tracker', 'tracker.sub': 'Track your daily progress',
+    'tracker.streak': 'Streak', 'tracker.days': 'Total days', 'tracker.clean': 'Clean days',
+    'tracker.checkinTitle': 'Today\'s check-in', 'tracker.checkinSub': 'Did you stay smoke-free today?',
+    'tracker.checkLabel': 'Yes, smoke-free today', 'tracker.checkSave': 'Save', 'tracker.checkSaved': '✓ Logged today',
+    'tracker.heatmap': '16-week map', 'tracker.recent': 'Last 14 days',
+    'tracker.statusFree': 'Smoke-free', 'tracker.statusSmoked': 'Smoked', 'tracker.statusNone': 'Not logged',
+    'tracker.saveDay': 'Save', 'tracker.saved': '✓ Saved!', 'tracker.relapse': 'Smoked today?', 'tracker.relapseBtn': '🚬 Log it', 'tracker.relapseLogged': 'Logged — stay strong',
+    'tracker.shareTitle': 'Share progress', 'tracker.shareSub': 'Inspire friends', 'tracker.shareBtn': 'WhatsApp ↗',
+
+    'savings.title': 'Savings Calculator', 'savings.sub': 'See how much you\'ve saved',
+    'savings.total': 'Total saved', 'savings.habits': 'Your habits', 'savings.cpd': 'Cigs per day', 'savings.packPrice': 'Pack price', 'savings.cigsPerPack': 'Cigs per pack',
+    'savings.recalc': 'Recalculate', 'savings.recalcDone': '✓ Updated!', 'savings.breakdown': 'Savings over time',
+    'savings.period.day': 'Daily', 'savings.period.week': 'Weekly', 'savings.period.month': 'Monthly', 'savings.period.year': 'Yearly',
+    'savings.cigsAvoided': 'Cigarettes avoided', 'savings.buysTitle': 'What you could buy', 'savings.unlocked': '✓ You can afford this', 'savings.locked': 'Not yet',
+    'savings.shareTitle': 'Share savings', 'savings.shareSub': 'Show friends', 'savings.shareBtn': 'WhatsApp ↗',
+
+    'badges.title': 'Your achievements', 'badges.sub': 'A badge for every milestone',
+    'badges.earnedLabel': 'Earned', 'badges.totalLabel': 'Total', 'badges.daysLabel': 'Days',
+    'badges.timeSection': 'Time', 'badges.milestoneSection': 'Milestones', 'badges.streakSection': 'Streak',
+    'badges.earned': '✓ Earned', 'badges.locked': '🔒 Locked', 'badges.newToast': '🎉 New badge!',
+    'badges.shareTitle': 'Share badges', 'badges.shareSub': 'Show your wins', 'badges.shareBtn': 'WhatsApp ↗',
+
+    'health.title': 'Health journey', 'health.sub': 'Your body is healing since you quit',
+    'health.daysLabel': 'days smoke-free', 'health.latest': 'Latest milestone', 'health.progress': 'Recovery progress', 'health.timeline': 'Milestone timeline',
+
+    'motivation.title': 'Daily motivation', 'motivation.sub': 'Today\'s message',
+    'motivation.personal': 'Your reason', 'motivation.fav': '❤️ Favourite', 'motivation.unfav': '✓ Favourited', 'motivation.favsTitle': 'Favourite quotes', 'motivation.noFavs': 'No favourites yet', 'motivation.share': 'Share ↗',
+
+    'tips.title': 'Expert tips', 'tips.sub': 'Helpful advice for quitting',
+
+    'stories.title': 'Success stories', 'stories.sub': 'Real stories from Pakistan', 'stories.days': 'days',
+    'stories.submitTitle': 'Share your story', 'stories.namePh': 'Your name', 'stories.daysPh': 'Days', 'stories.textPh': 'Your story…', 'stories.submit': 'Submit',
+    'stories.fillAll': 'Fill all fields', 'stories.thanks': '✓ Thank you!',
+
+    'nicotine.title': 'Nicotine therapy', 'nicotine.sub': 'Learn about NRT', 'nicotine.gum': 'Gum', 'nicotine.patch': 'Patch',
+    'nicotine.pros': 'Pros', 'nicotine.cons': 'Cons', 'nicotine.quizTitle': 'Which suits you?', 'nicotine.quizStart': 'Start quiz', 'nicotine.quizRestart': 'Try again',
+
+    'helplines.title': 'Helplines', 'helplines.sub': 'Pakistan — immediate help', 'helplines.lines': 'Helplines', 'helplines.hospitals': 'Hospitals',
+
+    'resources.title': 'Resources', 'resources.sub': 'Books, websites, videos',
+    'resources.tab.books': '📚 Books', 'resources.tab.websites': '🔗 Websites', 'resources.tab.videos': '▶️ Videos',
+
+    'leaderboard.title': 'Leaderboard', 'leaderboard.sub': 'Pakistan — anonymous rankings', 'leaderboard.privacy': '🔒 Fully anonymous — name and streak only',
+    'leaderboard.loading': '⏳ Loading…', 'leaderboard.empty': 'No data yet', 'leaderboard.you': 'You',
+    'leaderboard.streak': 'streak', 'leaderboard.days': 'days', 'leaderboard.tab.streak': '🔥 Streak', 'leaderboard.tab.days': '📅 Total days',
+
+    'breathing.title': 'Breathing exercise', 'breathing.sub': 'Quick help for cravings', 'breathing.tech478': '4-7-8', 'breathing.techBox': 'Box',
+    'breathing.ready': 'Ready?', 'breathing.start': 'Start', 'breathing.pause': 'Pause', 'breathing.reset': 'Reset', 'breathing.cycles': 'Cycles',
+    'breathing.phase.inhale': 'Breathe in', 'breathing.phase.hold': 'Hold', 'breathing.phase.exhale': 'Breathe out',
+
+    'about.title': 'About Saans', 'about.sub': 'Free quit-smoking companion for Pakistan', 'about.mission': 'Our mission',
+    'about.missionText': 'Saans helps Pakistanis quit smoking — free, bilingual, and private.',
+    'about.contact': 'Contact us', 'about.contactPh': 'Your message…', 'about.contactBtn': 'Send', 'about.fillMsg': 'Write a message', 'about.thanks': '✓ Thank you!',
 
     'settings.title': 'Settings', 'settings.redoOnboarding': 'Redo onboarding',
   },

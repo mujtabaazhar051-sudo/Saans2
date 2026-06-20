@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0D4F4F">
+  <meta name="saans-title-key" content="tracker.title">
+  <title>Tracker</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/tools.css">
+</head>
+<body data-page="tracker" data-shell="app">
+  <div class="page-shell">
+    <main class="page-main" id="app-root">
+      <div class="tool-page">
+        <header class="tool-header">
+          <span class="tool-badge">📅 <span data-i18n="tools.tracker"></span></span>
+          <h1 class="tool-title" data-i18n="tracker.title"></h1>
+          <p class="tool-subtitle" data-i18n="tracker.sub"></p>
+        </header>
+        <div id="trNoDate" style="display:none;"></div>
+        <div id="trMain">
+          <div class="tool-stats">
+            <div class="tool-stat"><span class="tool-stat__icon">🔥</span><span class="tool-stat__num" id="trStreak">0</span><span class="tool-stat__label" data-i18n="tracker.streak"></span></div>
+            <div class="tool-stat"><span class="tool-stat__icon">📅</span><span class="tool-stat__num" id="trDays">0</span><span class="tool-stat__label" data-i18n="tracker.days"></span></div>
+            <div class="tool-stat"><span class="tool-stat__icon">✅</span><span class="tool-stat__num" id="trClean">0</span><span class="tool-stat__label" data-i18n="tracker.clean"></span></div>
+          </div>
+          <div class="ui-card--tool ui-card--tool-accent checkin-bar">
+            <span style="font-size:2rem;">✅</span>
+            <div class="checkin-bar__text">
+              <h3 data-i18n="tracker.checkinTitle"></h3>
+              <p data-i18n="tracker.checkinSub"></p>
+            </div>
+            <label style="display:flex;align-items:center;gap:8px;"><input type="checkbox" id="trCheckToday"> <span data-i18n="tracker.checkLabel"></span></label>
+            <button type="button" class="ui-btn ui-btn--primary" id="trCheckBtn" data-i18n="tracker.checkSave"></button>
+            <span id="trCheckSaved" style="display:none;color:var(--color-success);font-weight:600;" data-i18n="tracker.checkSaved"></span>
+          </div>
+          <div class="ui-card--tool">
+            <h2 class="tool-section-title" data-i18n="tracker.heatmap"></h2>
+            <div class="heatmap-wrap"><div class="heatmap-grid" id="trHeatmap"></div></div>
+            <div class="heatmap-legend">
+              <span><i class="legend-dot" style="background:var(--color-success);"></i> <span data-i18n="tracker.statusFree"></span></span>
+              <span><i class="legend-dot" style="background:#e57373;"></i> <span data-i18n="tracker.statusSmoked"></span></span>
+            </div>
+          </div>
+          <div class="ui-card--tool">
+            <h2 class="tool-section-title" data-i18n="tracker.recent"></h2>
+            <div class="day-rows" id="trRecent"></div>
+          </div>
+          <div class="ui-card--tool" style="text-align:center;">
+            <p data-i18n="tracker.relapse"></p>
+            <button type="button" class="ui-btn ui-btn--secondary" id="trRelapseBtn" data-i18n="tracker.relapseBtn"></button>
+          </div>
+          <div class="tool-share">
+            <div><div class="tool-share__title" data-i18n="tracker.shareTitle"></div><div class="tool-share__sub" data-i18n="tracker.shareSub"></div></div>
+            <button type="button" class="ui-btn" id="trShareBtn" data-i18n="tracker.shareBtn"></button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="js/config.js"></script>
+  <script src="js/translations.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/share.js"></script>
+  <script src="js/data/content.js"></script>
+  <script src="js/pages/tools-common.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="js/firebase.js?v=5"></script>
+  <script src="js/analytics.js?v=5"></script>
+  <script src="js/auth.js?v=5"></script>
+  <script src="js/header.js?v=5"></script>
+  <script src="js/footer.js?v=5"></script>
+  <script src="js/bottom-nav.js?v=5"></script>
+  <script src="js/chat-bubble.js?v=5"></script>
+  <script src="js/shell.js?v=5"></script>
+  <script src="js/pages/tracker.js?v=5"></script>
+  <script src="js/bootstrap.js?v=5"></script>
+</body>
+</html>

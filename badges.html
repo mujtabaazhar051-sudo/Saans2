@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0D4F4F">
+  <meta name="saans-title-key" content="badges.title">
+  <title>Badges</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/tools.css">
+</head>
+<body data-page="badges" data-shell="app">
+  <div class="page-shell">
+    <main class="page-main" id="app-root">
+      <div class="tool-page">
+        <header class="tool-header">
+          <span class="tool-badge">🏅 <span data-i18n="tools.badges"></span></span>
+          <h1 class="tool-title" data-i18n="badges.title"></h1>
+          <p class="tool-subtitle" data-i18n="badges.sub"></p>
+        </header>
+        <div class="badges-summary">
+          <div class="tool-stat"><span class="tool-stat__num" id="bdEarned">0</span><span class="tool-stat__label" data-i18n="badges.earnedLabel"></span></div>
+          <div class="tool-stat"><span class="tool-stat__num" id="bdTotal">0</span><span class="tool-stat__label" data-i18n="badges.totalLabel"></span></div>
+          <div class="tool-stat"><span class="tool-stat__num" id="bdDays">0</span><span class="tool-stat__label" data-i18n="badges.daysLabel"></span></div>
+        </div>
+        <div class="ui-card--tool"><h2 class="tool-section-title" data-i18n="badges.timeSection"></h2><div class="badge-grid" id="bdTimeGrid"></div></div>
+        <div class="ui-card--tool"><h2 class="tool-section-title" data-i18n="badges.milestoneSection"></h2><div class="badge-grid" id="bdMilestoneGrid"></div></div>
+        <div class="ui-card--tool"><h2 class="tool-section-title" data-i18n="badges.streakSection"></h2><div class="badge-grid" id="bdStreakGrid"></div></div>
+        <div class="tool-share">
+          <div><div class="tool-share__title" data-i18n="badges.shareTitle"></div><div class="tool-share__sub" data-i18n="badges.shareSub"></div></div>
+          <button type="button" class="ui-btn" id="bdShareBtn" data-i18n="badges.shareBtn"></button>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="js/config.js"></script>
+  <script src="js/translations.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/share.js"></script>
+  <script src="js/data/content.js"></script>
+  <script src="js/pages/tools-common.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="js/firebase.js?v=5"></script>
+  <script src="js/analytics.js?v=5"></script>
+  <script src="js/auth.js?v=5"></script>
+  <script src="js/header.js?v=5"></script>
+  <script src="js/footer.js?v=5"></script>
+  <script src="js/bottom-nav.js?v=5"></script>
+  <script src="js/chat-bubble.js?v=5"></script>
+  <script src="js/shell.js?v=5"></script>
+  <script src="js/pages/badges.js?v=5"></script>
+  <script src="js/bootstrap.js?v=5"></script>
+</body>
+</html>

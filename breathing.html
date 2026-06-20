@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0D4F4F">
+  <meta name="saans-title-key" content="breathing.title">
+  <title>Breathing</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/tools.css">
+</head>
+<body data-page="breathing" data-shell="app">
+  <div class="page-shell">
+    <main class="page-main" id="app-root">
+      <div class="tool-page">
+        <header class="tool-header">
+          <span class="tool-badge">🫁 <span data-i18n="more.breathing"></span></span>
+          <h1 class="tool-title" data-i18n="breathing.title"></h1>
+          <p class="tool-subtitle" data-i18n="breathing.sub"></p>
+        </header>
+        <div class="tool-tabs">
+          <button type="button" class="tool-tab br-tech is-active" data-tech="478" data-i18n="breathing.tech478"></button>
+          <button type="button" class="tool-tab br-tech" data-tech="box" data-i18n="breathing.techBox"></button>
+        </div>
+        <div class="breath-ring-wrap">
+          <div class="breath-ring" id="brRing">
+            <div class="breath-phase" id="brPhase"></div>
+            <div class="breath-count" id="brCount"></div>
+          </div>
+        </div>
+        <p style="text-align:center;font-size:var(--text-sm);color:var(--color-text-muted);">
+          <span data-i18n="breathing.cycles"></span>: <strong id="brCycles">0</strong>
+        </p>
+        <div class="breath-controls" style="margin-top:var(--space-6);">
+          <button type="button" class="ui-btn ui-btn--primary" id="brToggle" data-i18n="breathing.start"></button>
+          <button type="button" class="ui-btn ui-btn--secondary" id="brReset" data-i18n="breathing.reset"></button>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="js/config.js"></script>
+  <script src="js/translations.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/pages/tools-common.js"></script>
+  <script src="js/header.js?v=5"></script>
+  <script src="js/footer.js?v=5"></script>
+  <script src="js/bottom-nav.js?v=5"></script>
+  <script src="js/chat-bubble.js?v=5"></script>
+  <script src="js/shell.js?v=5"></script>
+  <script src="js/pages/breathing.js?v=5"></script>
+  <script src="js/bootstrap.js?v=5"></script>
+</body>
+</html>

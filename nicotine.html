@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0D4F4F">
+  <meta name="saans-title-key" content="nicotine.title">
+  <title>NRT</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/tools.css">
+</head>
+<body data-page="nicotine" data-shell="app">
+  <div class="page-shell">
+    <main class="page-main" id="app-root">
+      <div class="tool-page">
+        <header class="tool-header">
+          <span class="tool-badge">💊 <span data-i18n="tools.nrt"></span></span>
+          <h1 class="tool-title" data-i18n="nicotine.title"></h1>
+          <p class="tool-subtitle" data-i18n="nicotine.sub"></p>
+        </header>
+        <div class="tool-form-grid">
+          <div class="ui-card--tool">
+            <h3 id="nrGumTitle"></h3>
+            <p><strong data-i18n="nicotine.pros"></strong>: <span id="nrGumPros"></span></p>
+            <p><strong data-i18n="nicotine.cons"></strong>: <span id="nrGumCons"></span></p>
+          </div>
+          <div class="ui-card--tool">
+            <h3 id="nrPatchTitle"></h3>
+            <p><strong data-i18n="nicotine.pros"></strong>: <span id="nrPatchPros"></span></p>
+            <p><strong data-i18n="nicotine.cons"></strong>: <span id="nrPatchCons"></span></p>
+          </div>
+        </div>
+        <div class="ui-card--tool" style="margin-top:var(--space-5);">
+          <h2 class="tool-section-title" data-i18n="nicotine.quizTitle"></h2>
+          <button type="button" class="ui-btn ui-btn--primary" id="nrQuizStart" data-i18n="nicotine.quizStart"></button>
+          <div id="nrQuiz" style="display:none;margin-top:var(--space-4);">
+            <p id="nrQuizQ" style="font-weight:600;margin-bottom:var(--space-3);"></p>
+            <div id="nrQuizOpts" style="display:flex;flex-direction:column;gap:var(--space-2);"></div>
+          </div>
+          <div id="nrResult" style="display:none;margin-top:var(--space-4);">
+            <p id="nrResultText" style="font-weight:600;margin-bottom:var(--space-3);"></p>
+            <button type="button" class="ui-btn ui-btn--secondary" id="nrQuizRestart" data-i18n="nicotine.quizRestart"></button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="js/config.js"></script>
+  <script src="js/translations.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/data/content.js"></script>
+  <script src="js/pages/tools-common.js"></script>
+  <script src="js/header.js?v=5"></script>
+  <script src="js/footer.js?v=5"></script>
+  <script src="js/bottom-nav.js?v=5"></script>
+  <script src="js/chat-bubble.js?v=5"></script>
+  <script src="js/shell.js?v=5"></script>
+  <script src="js/pages/nicotine.js?v=5"></script>
+  <script src="js/bootstrap.js?v=5"></script>
+</body>
+</html>

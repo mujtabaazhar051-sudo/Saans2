@@ -188,5 +188,7 @@
     };
   };
 
+  window.getSaansDb = function () { return _db; };
+
   initFirebase();
 })();

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0D4F4F">
+  <meta name="saans-title-key" content="motivation.title">
+  <title>Motivation</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/tools.css">
+</head>
+<body data-page="motivation" data-shell="app">
+  <div class="page-shell">
+    <main class="page-main" id="app-root">
+      <div class="tool-page">
+        <header class="tool-header">
+          <span class="tool-badge">💬 <span data-i18n="tools.motivation"></span></span>
+          <h1 class="tool-title" data-i18n="motivation.title"></h1>
+          <p class="tool-subtitle" data-i18n="motivation.sub"></p>
+        </header>
+        <div class="quote-hero">
+          <div style="font-size:2rem;">💬</div>
+          <p class="quote-hero__text" id="mqText"></p>
+          <div style="display:flex;gap:var(--space-3);justify-content:center;flex-wrap:wrap;">
+            <button type="button" class="ui-btn ui-btn--secondary" id="mqFavBtn" data-i18n="motivation.fav"></button>
+            <button type="button" class="ui-btn ui-btn--primary" id="mqShareBtn" data-i18n="motivation.share"></button>
+          </div>
+        </div>
+        <div class="ui-card--tool ui-card--tool-accent" id="mqPersonal" style="display:none;">
+          <div style="font-size:var(--text-xs);font-weight:600;color:var(--color-primary);" data-i18n="motivation.personal"></div>
+          <p id="mqPersonalText" style="margin-top:var(--space-2);font-weight:600;"></p>
+        </div>
+        <div class="ui-card--tool">
+          <h2 class="tool-section-title" data-i18n="motivation.favsTitle"></h2>
+          <div id="mqFavs"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="js/config.js"></script>
+  <script src="js/translations.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/data/content.js"></script>
+  <script src="js/pages/tools-common.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="js/firebase.js?v=5"></script>
+  <script src="js/auth.js?v=5"></script>
+  <script src="js/header.js?v=5"></script>
+  <script src="js/footer.js?v=5"></script>
+  <script src="js/bottom-nav.js?v=5"></script>
+  <script src="js/chat-bubble.js?v=5"></script>
+  <script src="js/shell.js?v=5"></script>
+  <script src="js/pages/motivation.js?v=5"></script>
+  <script src="js/bootstrap.js?v=5"></script>
+</body>
+</html>
