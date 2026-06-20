@@ -32,6 +32,18 @@
       } catch (_) { /* ignore */ }
     },
 
+    clearAll() {
+      var p = (window.SAANS_CONFIG && SAANS_CONFIG.LS_PREFIX) || 'saans2_';
+      try {
+        var keys = [];
+        for (var i = 0; i < localStorage.length; i++) {
+          var k = localStorage.key(i);
+          if (k && k.indexOf(p) === 0) keys.push(k);
+        }
+        keys.forEach(function (k) { localStorage.removeItem(k); });
+      } catch (_) { /* ignore */ }
+    },
+
     /** Raw string (for lang key backward compat during migration) */
     getRaw(key) {
       try {

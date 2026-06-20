@@ -12,15 +12,131 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/settings.css">
 </head>
 <body data-page="settings" data-shell="app">
   <div class="page-shell">
-    <main class="page-main page-main--narrow" id="app-root" style="padding-top:var(--space-8);">
-      <h1 data-i18n="settings.title">ترتیبات</h1>
-      <div class="ui-card" style="margin-top:var(--space-6);">
-        <button type="button" class="ui-btn ui-btn--secondary" id="redoOnboarding" style="width:100%;" data-i18n="settings.redoOnboarding">آن بورڈنگ دوبارہ کریں</button>
+    <main class="page-main" id="app-root">
+      <div class="settings-page">
+        <header class="tool-header">
+          <span class="tool-badge">⚙️ <span data-i18n="settings.title"></span></span>
+          <h1 class="tool-title" data-i18n="settings.title"></h1>
+          <p class="tool-subtitle" data-i18n="settings.sub"></p>
+        </header>
+
+        <div class="settings-summary">
+          <div class="settings-stat"><span class="settings-stat__num" id="stDays">0</span><span class="settings-stat__label" data-i18n="settings.statDays"></span></div>
+          <div class="settings-stat"><span class="settings-stat__num" id="stStreak">0</span><span class="settings-stat__label" data-i18n="settings.statStreak"></span></div>
+          <div class="settings-stat"><span class="settings-stat__num" id="stSaved">0</span><span class="settings-stat__label" data-i18n="settings.statSaved"></span></div>
+        </div>
+
+        <!-- Account -->
+        <div class="settings-card" id="stAccount" style="display:none;">
+          <div class="settings-card__head">👤 <span data-i18n="settings.account"></span></div>
+          <div class="settings-card__body">
+            <div class="settings-account">
+              <div class="settings-account__avatar" id="stAvatar">👤</div>
+              <div>
+                <div style="font-weight:700;" id="stAccName">—</div>
+                <div class="settings-account__email ui-latin" id="stAccEmail">—</div>
+              </div>
+            </div>
+            <button type="button" class="ui-btn ui-btn--secondary" id="stSignOut" data-i18n="auth.signout"></button>
+          </div>
+        </div>
+
+        <!-- Profile -->
+        <div class="settings-card">
+          <div class="settings-card__head">✏️ <span data-i18n="settings.profile"></span></div>
+          <div class="settings-card__body">
+            <div class="settings-row">
+              <div class="settings-field"><label data-i18n="onboarding.name"></label><input type="text" id="stName" maxlength="40"></div>
+              <div class="settings-field"><label data-i18n="onboarding.city"></label><input type="text" id="stCity" maxlength="40"></div>
+            </div>
+            <button type="button" class="ui-btn ui-btn--primary" id="stSaveProfile" data-i18n="settings.save"></button>
+          </div>
+        </div>
+
+        <!-- Quit date -->
+        <div class="settings-card">
+          <div class="settings-card__head">📅 <span data-i18n="settings.quitDate"></span></div>
+          <div class="settings-card__body">
+            <div class="settings-field">
+              <label data-i18n="onboarding.quitDate"></label>
+              <input type="date" id="stQuitDate">
+              <p class="settings-hint" data-i18n="settings.quitDateHint"></p>
+            </div>
+            <button type="button" class="ui-btn ui-btn--primary" id="stSaveQuit" data-i18n="settings.save"></button>
+          </div>
+        </div>
+
+        <!-- Habits -->
+        <div class="settings-card">
+          <div class="settings-card__head">🚬 <span data-i18n="settings.habits"></span></div>
+          <div class="settings-card__body">
+            <div class="settings-row">
+              <div class="settings-field"><label data-i18n="onboarding.cpd"></label><input type="number" id="stCpd" min="1" max="100"></div>
+              <div class="settings-field"><label data-i18n="onboarding.packPrice"></label><input type="number" id="stPp" min="1"></div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-field"><label data-i18n="settings.cpp"></label><input type="number" id="stCpp" min="1"></div>
+              <div class="settings-field"><label data-i18n="onboarding.years"></label><input type="number" id="stYrs" min="1" max="60"></div>
+            </div>
+            <button type="button" class="ui-btn ui-btn--primary" id="stSaveHabits" data-i18n="settings.save"></button>
+          </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="settings-card">
+          <div class="settings-card__head">🔔 <span data-i18n="settings.notif"></span></div>
+          <div class="settings-card__body">
+            <div class="settings-toggle-row">
+              <div>
+                <div style="font-weight:600;font-size:var(--text-sm);" data-i18n="settings.notifLabel"></div>
+                <p class="settings-hint" data-i18n="settings.notifHint"></p>
+              </div>
+              <button type="button" class="ui-btn ui-btn--primary" id="stNotifBtn" data-i18n="settings.notifOn"></button>
+            </div>
+            <p class="settings-status-ok" id="stNotifStatus" data-i18n="settings.notifActive"></p>
+          </div>
+        </div>
+
+        <!-- AI Coach API (Phase 5 prep) -->
+        <div class="settings-card">
+          <div class="settings-card__head">🤖 <span data-i18n="settings.apiKey"></span></div>
+          <div class="settings-card__body">
+            <div class="settings-field">
+              <label data-i18n="settings.apiKeyLabel"></label>
+              <input type="password" id="stApiKey" class="ui-latin" autocomplete="off" placeholder="sk-ant-...">
+              <p class="settings-hint" data-i18n="settings.apiKeyHint"></p>
+            </div>
+            <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;">
+              <button type="button" class="ui-btn ui-btn--primary" id="stSaveApiKey" data-i18n="settings.saveApiKey"></button>
+              <button type="button" class="ui-btn ui-btn--secondary" id="stClearApiKey" data-i18n="settings.clearApiKey"></button>
+              <a class="ui-btn ui-btn--ghost ui-latin" href="https://console.anthropic.com" target="_blank" rel="noopener" data-i18n="settings.getApiKey"></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Danger zone -->
+        <div class="settings-card settings-danger">
+          <div class="settings-card__head">⚠️ <span data-i18n="settings.danger"></span></div>
+          <div class="settings-card__body">
+            <div class="settings-danger-row">
+              <div><h4 data-i18n="settings.redoOnboarding"></h4><p data-i18n="settings.redoObDesc"></p></div>
+              <button type="button" class="ui-btn settings-btn-warn" id="stRedoOb" data-i18n="settings.redoBtn"></button>
+            </div>
+            <div class="settings-danger-row">
+              <div><h4 data-i18n="settings.clearCheckins"></h4><p data-i18n="settings.clearCheckinsDesc"></p></div>
+              <button type="button" class="ui-btn settings-btn-danger" id="stClearCheckins" data-i18n="settings.deleteBtn"></button>
+            </div>
+            <div class="settings-danger-row">
+              <div><h4 data-i18n="settings.clearAll"></h4><p data-i18n="settings.clearAllDesc"></p></div>
+              <button type="button" class="ui-btn settings-btn-danger" id="stClearAll" data-i18n="settings.resetBtn"></button>
+            </div>
+          </div>
+        </div>
       </div>
-      <p style="margin-top:var(--space-6);color:var(--color-text-muted);font-size:var(--text-sm);" data-i18n="common.comingSoon">جلد آ رہا ہے</p>
     </main>
   </div>
 
@@ -28,28 +144,19 @@
   <script src="js/translations.js"></script>
   <script src="js/i18n.js"></script>
   <script src="js/storage.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/pages/tools-common.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script src="js/firebase.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/onboarding.js"></script>
-  <script src="js/header.js"></script>
-  <script src="js/footer.js"></script>
-  <script src="js/bottom-nav.js"></script>
-  <script src="js/chat-bubble.js"></script>
-  <script src="js/shell.js"></script>
-  <script>
-    window.SaansPages = window.SaansPages || {};
-    SaansPages.settings = function () {
-      requireAuth(function () {
-        document.getElementById('redoOnboarding').addEventListener('click', function () {
-          window.location.href = saansHref('dashboard.html');
-          LS.set('onboardingDone', false);
-        });
-      });
-    };
-  </script>
-  <script src="js/bootstrap.js"></script>
+  <script src="js/firebase.js?v=6"></script>
+  <script src="js/auth.js?v=6"></script>
+  <script src="js/header.js?v=6"></script>
+  <script src="js/footer.js?v=6"></script>
+  <script src="js/bottom-nav.js?v=6"></script>
+  <script src="js/chat-bubble.js?v=6"></script>
+  <script src="js/shell.js?v=6"></script>
+  <script src="js/pages/settings.js?v=6"></script>
+  <script src="js/bootstrap.js?v=6"></script>
 </body>
 </html>
