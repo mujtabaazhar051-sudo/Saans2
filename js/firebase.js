@@ -1,51 +1,28 @@
 /**
- * Saans — Firebase (CDN compat, sequential load — fixes auth race bug)
+ * Saans — Firebase (CDN compat)
  */
 (function () {
   'use strict';
 
-  var _app, _auth, _db;
+  var _auth, _db;
   var _firebaseReady = false;
   var _firebaseFailed = false;
   var _callbacks = [];
   var _errorMsg = '';
 
-  var SDK = [
-    'https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js',
-    'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js',
-    'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js',
-  ];
-
   function getConfig() {
     return (window.SAANS_CONFIG && SAANS_CONFIG.FIREBASE) || null;
-  }
-
-  function loadScript(src) {
-    return new Promise(function (resolve, reject) {
-      var existing = document.querySelector('script[src="' + src + '"]');
-      if (existing) {
-        if (existing.getAttribute('data-loaded') === '1') { resolve(); return; }
-        existing.addEventListener('load', resolve);
-        existing.addEventListener('error', reject);
-        return;
-      }
-      var s = document.createElement('script');
-      s.src = src;
-      s.onload = function () { s.setAttribute('data-loaded', '1'); resolve(); };
-      s.onerror = function () { reject(new Error('Failed to load ' + src)); };
-      document.head.appendChild(s);
-    });
   }
 
   function markReady() {
     _firebaseReady = true;
     window._firebaseReady = true;
-    _callbacks.forEach(function (fn) { fn(); });
-    _callbacks = [];
+    _callbacks.splice(0).forEach(function (fn) { fn(); });
     window.dispatchEvent(new CustomEvent('saans:firebase-ready'));
   }
 
   function markFailed(msg) {
+    if (_firebaseFailed) return;
     _firebaseFailed = true;
     _errorMsg = msg || 'Firebase failed to load';
     console.error('[Saans Firebase]', _errorMsg);
@@ -63,14 +40,12 @@
 
   function setupApp(cfg) {
     if (typeof firebase === 'undefined') {
-      markFailed('Firebase SDK not available');
+      markFailed('Firebase SDK not loaded — check your internet connection');
       return;
     }
     try {
       if (!firebase.apps.length) {
-        _app = firebase.initializeApp(cfg);
-      } else {
-        _app = firebase.app();
+        firebase.initializeApp(cfg);
       }
       _auth = firebase.auth();
       _db = firebase.firestore();
@@ -80,6 +55,16 @@
     }
   }
 
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = function () { reject(new Error(src)); };
+      document.head.appendChild(s);
+    });
+  }
+
   function initFirebase() {
     var cfg = getConfig();
     if (!cfg) {
@@ -87,30 +72,33 @@
       return;
     }
 
-    /* Scripts may already be in HTML <head> */
-    if (typeof firebase !== 'undefined' && firebase.apps) {
+    if (typeof firebase !== 'undefined') {
       setupApp(cfg);
       return;
     }
 
-    /* Load SDKs one-by-one (parallel load caused login to break) */
+    var urls = [
+      'https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js',
+      'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js',
+      'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js',
+    ];
+
     (async function () {
       try {
-        for (var i = 0; i < SDK.length; i++) {
-          await loadScript(SDK[i]);
+        for (var i = 0; i < urls.length; i++) {
+          await loadScript(urls[i]);
         }
         setupApp(cfg);
       } catch (e) {
-        markFailed(e.message || 'Firebase SDK load failed');
+        markFailed('Could not load Firebase. Check internet and refresh.');
       }
     })();
 
-    /* Safety timeout — never leave buttons disabled forever */
     setTimeout(function () {
       if (!_firebaseReady && !_firebaseFailed) {
-        markFailed('Firebase took too long to load. Check your internet and refresh.');
+        markFailed('Firebase took too long. Please refresh the page.');
       }
-    }, 15000);
+    }, 12000);
   }
 
   window.getCurrentUser = function () {
@@ -118,7 +106,7 @@
   };
 
   window.signInWithGoogle = function () {
-    if (!_auth) return Promise.reject({ code: 'auth/not-ready', message: 'Firebase not ready' });
+    if (!_auth) return Promise.reject({ code: 'auth/not-ready' });
     return _auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   };
 
@@ -138,8 +126,7 @@
   };
 
   window.signOutUser = function () {
-    if (!_auth) return Promise.resolve();
-    return _auth.signOut();
+    return _auth ? _auth.signOut() : Promise.resolve();
   };
 
   window.onAuthChange = function (callback) {

@@ -172,6 +172,10 @@
     }
   }
 
+  window.SaansOnboardingNext = next;
+  window.SaansOnboardingBack = back;
+  window.SaansOnboardingSkip = finish;
+
   function wireButtons() {
     if (wired) return;
     wired = true;

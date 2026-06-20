@@ -4,12 +4,11 @@
 (function () {
   'use strict';
 
-  var activeTab = 'login';
-
   function $(id) { return document.getElementById(id); }
 
   function authErrorKey(code) {
-    return 'auth.error.' + (code || 'default').replace(/\//g, '.');
+    if (!code) return 'auth.error.default';
+    return 'auth.error.' + String(code).replace(/\//g, '.');
   }
 
   function showMsg(text, type) {
@@ -31,17 +30,16 @@
     if (sp) sp.classList.toggle('is-visible', loading);
   }
 
-  function setFirebaseLoading(loading) {
+  function setFirebaseBanner(loading, errorText) {
     var banner = $('firebaseLoading');
-    if (banner) banner.classList.toggle('is-visible', loading);
-    ['loginBtn', 'signupBtn', 'googleLoginBtn', 'googleSignupBtn'].forEach(function (id) {
-      var btn = $(id);
-      if (btn) btn.disabled = loading;
-    });
+    if (banner) {
+      banner.classList.toggle('is-visible', loading || !!errorText);
+      if (errorText) banner.textContent = errorText;
+      else banner.textContent = t('auth.firebaseLoading');
+    }
   }
 
   function switchTab(tab) {
-    activeTab = tab;
     $('panelLogin').classList.toggle('is-active', tab === 'login');
     $('panelSignup').classList.toggle('is-active', tab === 'signup');
     $('tabLogin').classList.toggle('is-active', tab === 'login');
@@ -51,16 +49,17 @@
 
   async function onLoginSuccess(user, isNew) {
     showMsg(isNew ? t('auth.welcomeNew') : t('auth.welcomeBack'), 'success');
-    if (!isNew) {
-      await syncFromCloud(user);
-    } else {
-      var name = user.displayName || LS.get('userName', '');
-      if (name) LS.set('userName', name);
-      await syncToCloud(user);
-    }
+    try {
+      if (!isNew) await syncFromCloud(user);
+      else {
+        var name = user.displayName || LS.get('userName', '');
+        if (name) LS.set('userName', name);
+        await syncToCloud(user);
+      }
+    } catch (_) { /* local data still works */ }
     setTimeout(function () {
       window.location.href = saansHref('dashboard.html');
-    }, 900);
+    }, 800);
   }
 
   function showLoggedIn(user) {
@@ -78,11 +77,32 @@
     $('liContinueBtn').href = saansHref('dashboard.html');
   }
 
+  async function waitForFirebase() {
+    if (isFirebaseReady()) return true;
+    if (getFirebaseError()) {
+      showMsg(getFirebaseError(), 'error');
+      return false;
+    }
+    return new Promise(function (resolve) {
+      var done = false;
+      function finish(ok) { if (!done) { done = true; resolve(ok); } }
+      onFirebaseReady(function () { finish(true); });
+      window.addEventListener('saans:firebase-error', function (ev) {
+        showMsg((ev.detail && ev.detail.message) || t('auth.firebaseLoadError'), 'error');
+        finish(false);
+      }, { once: true });
+      setTimeout(function () {
+        if (!isFirebaseReady()) {
+          showMsg(t('auth.firebaseLoadError'), 'error');
+          finish(false);
+        }
+      }, 12000);
+    });
+  }
+
   window.SaansPages = window.SaansPages || {};
 
   SaansPages.login = function () {
-    initAnalytics();
-
     $('tabLogin').addEventListener('click', function () { switchTab('login'); });
     $('tabSignup').addEventListener('click', function () { switchTab('signup'); });
 
@@ -90,7 +110,7 @@
       var email = $('loginEmail').value.trim();
       var pw = $('loginPw').value;
       if (!email || !pw) { showMsg(t('auth.error.auth.invalid-email')); return; }
-      if (!isFirebaseReady()) { showMsg(t('auth.firebaseLoading')); return; }
+      if (!(await waitForFirebase())) return;
       setLoading('loginBtn', 'loginSpinner', true);
       hideMsg();
       try {
@@ -109,7 +129,7 @@
       var pw = $('signupPw').value;
       if (!email) { showMsg(t('auth.error.auth.invalid-email')); return; }
       if (!pw || pw.length < 6) { showMsg(t('auth.error.auth.weak-password')); return; }
-      if (!isFirebaseReady()) { showMsg(t('auth.firebaseLoading')); return; }
+      if (!(await waitForFirebase())) return;
       setLoading('signupBtn', 'signupSpinner', true);
       hideMsg();
       try {
@@ -127,7 +147,7 @@
     });
 
     async function handleGoogle() {
-      if (!isFirebaseReady()) { showMsg(t('auth.firebaseLoading')); return; }
+      if (!(await waitForFirebase())) return;
       hideMsg();
       try {
         var result = await signInWithGoogle();
@@ -143,6 +163,7 @@
     $('forgotBtn').addEventListener('click', async function () {
       var email = $('loginEmail').value.trim();
       if (!email) { showMsg(t('auth.error.auth.invalid-email')); return; }
+      if (!(await waitForFirebase())) return;
       try {
         await sendPasswordReset(email);
         showMsg(t('auth.forgotSent'), 'success');
@@ -164,19 +185,15 @@
       if (e.key === 'Enter') $('signupBtn').click();
     });
 
-    setFirebaseLoading(true);
-
-    window.addEventListener('saans:firebase-error', function (ev) {
-      setFirebaseLoading(false);
-      var msg = (ev.detail && ev.detail.message) || t('auth.firebaseLoadError');
-      showMsg(msg, 'error');
-    });
-
+    setFirebaseBanner(true);
     onFirebaseReady(function () {
-      setFirebaseLoading(false);
+      setFirebaseBanner(false);
       onAuthChange(function (user) {
         if (user) showLoggedIn(user);
       });
+    });
+    window.addEventListener('saans:firebase-error', function (ev) {
+      setFirebaseBanner(false, (ev.detail && ev.detail.message) || t('auth.firebaseLoadError'));
     });
 
     redirectIfAuthed('dashboard.html');

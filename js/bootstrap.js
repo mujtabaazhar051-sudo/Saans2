@@ -22,10 +22,14 @@
     }
 
     if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-      /* Unregister old SW that cached broken JS — re-enable in Phase 6 */
       navigator.serviceWorker.getRegistrations().then(function (regs) {
         regs.forEach(function (r) { r.unregister(); });
       });
+      if (window.caches && caches.keys) {
+        caches.keys().then(function (keys) {
+          keys.forEach(function (k) { caches.delete(k); });
+        });
+      }
     }
   }
 

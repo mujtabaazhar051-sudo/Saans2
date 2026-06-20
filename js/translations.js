@@ -41,6 +41,7 @@ const TRANSLATIONS = {
     'auth.error.auth.invalid-email': 'ای میل درست نہیں',
     'auth.error.auth.popup-closed-by-user': 'Google لاگ ان منسوخ ہوا',
     'auth.error.auth.network-request-failed': 'انٹرنیٹ کنکشن چیک کریں',
+    'auth.error.auth.operation-not-allowed': 'ای میل لاگ ان Firebase میں فعال نہیں — Firebase Console میں Email/Password چالو کریں',
     'auth.error.auth.not-ready': 'سسٹم ابھی لوڈ ہو رہا ہے — تھوڑی دیر بعد کوشش کریں',
     'auth.error.default': 'کچھ مسئلہ ہوا — دوبارہ کوشش کریں',
 
@@ -149,6 +150,7 @@ const TRANSLATIONS = {
     'auth.error.auth.invalid-email': 'Invalid email address',
     'auth.error.auth.popup-closed-by-user': 'Google sign-in cancelled',
     'auth.error.auth.network-request-failed': 'Check your internet connection',
+    'auth.error.auth.operation-not-allowed': 'Email/password login is not enabled in Firebase',
     'auth.error.auth.not-ready': 'Still loading — please wait a moment and try again',
     'auth.error.default': 'Something went wrong — please try again',
 
