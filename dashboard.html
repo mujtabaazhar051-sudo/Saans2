@@ -6,44 +6,173 @@
   <meta name="theme-color" content="#0D4F4F">
   <meta name="saans-title-key" content="nav.home">
   <title>Dashboard</title>
-
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
   <link rel="manifest" href="manifest.json">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/onboarding.css">
+  <link rel="stylesheet" href="css/pages/dashboard.css">
 </head>
 <body data-page="dashboard" data-shell="app">
+
+  <!-- Onboarding wizard -->
+  <div class="ob-overlay" id="obOverlay">
+    <div class="ob-card">
+      <div class="ob-progress"><div class="ob-progress__bar" id="obProgressBar" style="width:0%"></div></div>
+      <div class="ob-header">
+        <div class="ob-step-label" id="obStepLabel">1 / 6</div>
+        <div class="ob-heading" id="obHeading"></div>
+        <div class="ob-sub" id="obSub"></div>
+      </div>
+      <div class="ob-body">
+        <div class="ob-step is-active" id="obStep0">
+          <div class="ob-welcome">
+            <span class="ob-welcome__icon">🫁</span>
+            <h2 id="obWelcomeH"></h2>
+            <p id="obWelcomeP"></p>
+          </div>
+        </div>
+        <div class="ob-step" id="obStep1">
+          <div>
+            <label class="ob-label" id="obNameLabel"></label>
+            <input type="text" class="ob-input" id="obName" maxlength="40">
+          </div>
+          <div>
+            <label class="ob-label" id="obCityLabel"></label>
+            <input type="text" class="ob-input" id="obCity" maxlength="40">
+          </div>
+        </div>
+        <div class="ob-step" id="obStep2">
+          <div class="ob-options" id="obQuitOpts"></div>
+        </div>
+        <div class="ob-step" id="obStep3">
+          <div class="ob-row">
+            <div><label class="ob-label" id="obCpdLabel"></label><input type="number" class="ob-input" id="obCpd" min="1" max="100" value="20"></div>
+            <div><label class="ob-label" id="obPpLabel"></label><input type="number" class="ob-input" id="obPp" min="100" max="5000" value="600"></div>
+          </div>
+          <div><label class="ob-label" id="obYrsLabel"></label><input type="number" class="ob-input" id="obYrs" min="1" max="60" value="5"></div>
+          <div><label class="ob-label" id="obQuitDateLabel"></label><input type="date" class="ob-input" id="obQuitDate"></div>
+        </div>
+        <div class="ob-step" id="obStep4">
+          <div class="ob-options" id="obMotivOpts"></div>
+        </div>
+        <div class="ob-step" id="obStep5">
+          <div class="ob-chips" id="obTriggerChips"></div>
+        </div>
+      </div>
+      <div class="ob-footer">
+        <button type="button" class="ob-back-btn" id="obBackBtn">←</button>
+        <button type="button" class="ob-skip" id="obSkipBtn"></button>
+        <button type="button" class="ob-next-btn" id="obNextBtn"><span id="obNextLabel"></span><span id="obNextArrow"></span></button>
+      </div>
+    </div>
+  </div>
 
   <div class="page-shell">
     <main class="page-main page-main--full" id="app-root">
       <div class="dash-layout">
-        <aside class="dash-sidebar ui-card" style="border-radius:0; min-height:200px; background:linear-gradient(180deg,#0D4F4F,#2A9D8F); color:#fff; border:none;">
-          <p data-i18n="common.comingSoon"></p>
+        <aside class="dash-sidebar">
+          <div class="dash-sidebar__inner">
+            <div class="dash-greeting" id="dashGreeting">—</div>
+            <div class="dash-ring">
+              <svg width="110" height="110" viewBox="0 0 110 110">
+                <circle class="dash-ring__bg" cx="55" cy="55" r="48"/>
+                <circle class="dash-ring__fill" id="dashRingFill" cx="55" cy="55" r="48"/>
+              </svg>
+              <div class="dash-ring__label">
+                <span class="dash-ring__num" id="dashDays">0</span>
+                <span class="dash-ring__sub" id="dashDaysLabel"></span>
+              </div>
+            </div>
+            <div class="dash-milestone" id="dashNextMs"></div>
+            <div class="dash-stats" id="dashStats">
+              <div class="dash-stat"><span class="dash-stat__label" data-i18n="dashboard.streak"></span><span class="dash-stat__val" id="qsStreak">0</span></div>
+              <div class="dash-stat"><span class="dash-stat__label" data-i18n="dashboard.saved"></span><span class="dash-stat__val" id="qsSaved">—</span></div>
+              <div class="dash-stat"><span class="dash-stat__label" data-i18n="dashboard.badges"></span><span class="dash-stat__val" id="dashBadges">0</span></div>
+            </div>
+            <div class="dash-setup" id="setupBar">
+              <div class="dash-setup__title" data-i18n="dashboard.setupTitle"></div>
+              <input type="date" id="quitDateInput" class="dash-date-input">
+              <button type="button" class="ui-btn ui-btn--primary" id="setupSaveBtn" style="width:100%;margin-top:8px;" data-i18n="dashboard.setupSave"></button>
+            </div>
+            <div class="dash-checkin" id="dashCheckin">
+              <div class="dash-checkin__q" data-i18n="dashboard.checkin.question"></div>
+              <div class="dash-checkin__btns" id="checkinBtns">
+                <button type="button" class="dash-btn-yes" onclick="logCheckin(true)" data-i18n="dashboard.checkin.yes"></button>
+                <button type="button" class="dash-btn-no" onclick="logCheckin(false)" data-i18n="dashboard.checkin.no"></button>
+              </div>
+              <div class="dash-checkin-done" id="checkinDone"><span>✓</span><span id="checkinDoneText"></span></div>
+            </div>
+          </div>
         </aside>
+
         <div class="dash-content">
-          <h1 data-i18n="nav.home"></h1>
-          <p data-i18n="common.comingSoon"></p>
+          <div class="weekly-summary" id="weeklySummary">
+            <div class="ws-header">
+              <div class="ws-title" id="wsTitle" data-i18n="dashboard.wsTitle"></div>
+              <div class="ws-week" id="wsWeek"></div>
+            </div>
+            <div class="ws-grid">
+              <div><span class="ws-stat-num" id="wsClean">0</span><span class="ws-stat-label" data-i18n="dashboard.wsClean"></span></div>
+              <div><span class="ws-stat-num" id="wsSaved">0</span><span class="ws-stat-label" data-i18n="dashboard.wsSaved"></span></div>
+              <div><span class="ws-stat-num" id="wsCigs">0</span><span class="ws-stat-label" data-i18n="dashboard.wsCigs"></span></div>
+              <div><span class="ws-stat-num" id="wsStreak">0</span><span class="ws-stat-label" data-i18n="dashboard.wsStreak"></span></div>
+            </div>
+            <div class="ws-days-row" id="wsDaysRow"></div>
+            <div class="ws-msg" id="wsMsg"></div>
+          </div>
+
+          <div class="dash-top-row">
+            <div class="dash-quote">
+              <div class="dash-quote__label" data-i18n="dashboard.quoteLabel"></div>
+              <div class="dash-quote__text" id="dqText"></div>
+              <a href="motivation.html" class="dash-quote__link" data-i18n="dashboard.quoteMore"></a>
+            </div>
+            <a href="breathing.html" class="dash-craving">
+              <span class="dash-craving__icon">🫁</span>
+              <div class="dash-craving__title" data-i18n="dashboard.craving.title"></div>
+              <div class="dash-craving__sub" data-i18n="dashboard.craving.sub"></div>
+              <div class="dash-craving__go" data-i18n="dashboard.craving.go"></div>
+            </a>
+          </div>
+
+          <h2 class="dash-tools-title" data-i18n="dashboard.toolsTitle"></h2>
+          <div class="dash-tools-grid" id="dashToolsGrid"></div>
+
+          <div class="wa-share">
+            <div class="wa-share__icon">📤</div>
+            <div class="wa-share__text">
+              <strong data-i18n="dashboard.waTitle"></strong>
+              <span data-i18n="dashboard.waSub"></span>
+            </div>
+            <button type="button" class="wa-share__btn" id="waShareBtn" data-i18n="dashboard.waBtn"></button>
+          </div>
         </div>
       </div>
     </main>
   </div>
 
+  <div class="dash-confetti" id="dashConfetti"></div>
+
   <script src="js/config.js"></script>
   <script src="js/translations.js"></script>
   <script src="js/i18n.js"></script>
   <script src="js/storage.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/share.js"></script>
+  <script src="js/firebase.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/onboarding.js"></script>
   <script src="js/header.js"></script>
   <script src="js/footer.js"></script>
   <script src="js/bottom-nav.js"></script>
   <script src="js/chat-bubble.js"></script>
   <script src="js/shell.js"></script>
+  <script src="js/pages/dashboard.js"></script>
   <script src="js/bootstrap.js"></script>
 </body>
 </html>

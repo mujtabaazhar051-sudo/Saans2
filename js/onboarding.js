@@ -1,0 +1,228 @@
+/**
+ * Saans — onboarding wizard (reads language from storage, not DOM)
+ */
+(function () {
+  'use strict';
+
+  var TOTAL = 6;
+  var step = 0;
+  var quitVal = '';
+  var motivVal = '';
+  var triggers = [];
+
+  var QUIT_OPTS = [
+    { val: 'decided', icon: '✅', key: 'onboarding.quit.decided' },
+    { val: 'thinking', icon: '🤔', key: 'onboarding.quit.thinking' },
+    { val: 'future', icon: '📅', key: 'onboarding.quit.future' },
+    { val: 'exploring', icon: '👀', key: 'onboarding.quit.exploring' },
+  ];
+
+  var MOTIV_OPTS = [
+    { val: 'health', icon: '❤️', key: 'onboarding.motiv.health' },
+    { val: 'family', icon: '👨‍👩‍👧', key: 'onboarding.motiv.family' },
+    { val: 'money', icon: '💰', key: 'onboarding.motiv.money' },
+    { val: 'fitness', icon: '🏃', key: 'onboarding.motiv.fitness' },
+    { val: 'pride', icon: '🌟', key: 'onboarding.motiv.pride' },
+    { val: 'doctor', icon: '🩺', key: 'onboarding.motiv.doctor' },
+  ];
+
+  var TRIGGER_KEYS = [
+    'onboarding.trigger.morning', 'onboarding.trigger.meals', 'onboarding.trigger.tea',
+    'onboarding.trigger.stress', 'onboarding.trigger.friends', 'onboarding.trigger.bored',
+    'onboarding.trigger.driving', 'onboarding.trigger.work', 'onboarding.trigger.happy',
+    'onboarding.trigger.night',
+  ];
+
+  var STEP_HEADING_KEYS = [
+    'onboarding.step0.heading', 'onboarding.step1.heading', 'onboarding.step2.heading',
+    'onboarding.step3.heading', 'onboarding.step4.heading', 'onboarding.step5.heading',
+  ];
+
+  var STEP_SUB_KEYS = [
+    'onboarding.step0.sub', 'onboarding.step1.sub', 'onboarding.step2.sub',
+    'onboarding.step3.sub', 'onboarding.step4.sub', 'onboarding.step5.sub',
+  ];
+
+  function el(id) { return document.getElementById(id); }
+
+  function updateHeader() {
+    var lang = getLang();
+    if (el('obStepLabel')) el('obStepLabel').textContent = (step + 1) + ' / ' + TOTAL;
+    if (el('obHeading')) el('obHeading').textContent = t(STEP_HEADING_KEYS[step]);
+    if (el('obSub')) el('obSub').textContent = t(STEP_SUB_KEYS[step]);
+    if (el('obProgressBar')) el('obProgressBar').style.width = ((step / (TOTAL - 1)) * 100) + '%';
+
+    var nextLbl = el('obNextLabel');
+    var nextArr = el('obNextArrow');
+    var backBtn = el('obBackBtn');
+    var skipBtn = el('obSkipBtn');
+
+    if (nextLbl) nextLbl.textContent = step === TOTAL - 1 ? t('onboarding.finish') : t('onboarding.next');
+    if (nextArr) nextArr.textContent = step === TOTAL - 1 ? '' : (lang === 'ur' ? ' ←' : ' →');
+    if (backBtn) backBtn.disabled = step === 0;
+    if (skipBtn) {
+      skipBtn.textContent = t('onboarding.skip');
+      skipBtn.style.display = step === 0 ? 'none' : 'inline';
+    }
+    if (el('obNextBtn')) el('obNextBtn').classList.toggle('is-finish', step === TOTAL - 1);
+  }
+
+  function showStep(n) {
+    document.querySelectorAll('.ob-step').forEach(function (node, i) {
+      node.classList.toggle('is-active', i === n);
+    });
+    if (n === 2) buildOptions('obQuitOpts', QUIT_OPTS, quitVal, function (v) { quitVal = v; });
+    if (n === 4) buildOptions('obMotivOpts', MOTIV_OPTS, motivVal, function (v) { motivVal = v; });
+    if (n === 5) buildTriggers();
+  }
+
+  function buildOptions(containerId, opts, selected, onSelect) {
+    var wrap = el(containerId);
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    opts.forEach(function (opt) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'ob-option' + (selected === opt.val ? ' is-selected' : '');
+      btn.innerHTML = '<span class="ob-option__icon">' + opt.icon + '</span><span>' + t(opt.key) + '</span>';
+      btn.addEventListener('click', function () {
+        onSelect(opt.val);
+        wrap.querySelectorAll('.ob-option').forEach(function (b) { b.classList.remove('is-selected'); });
+        btn.classList.add('is-selected');
+      });
+      wrap.appendChild(btn);
+    });
+  }
+
+  function buildTriggers() {
+    var wrap = el('obTriggerChips');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    var note = document.createElement('p');
+    note.className = 'ob-trigger-note';
+    note.textContent = t('onboarding.triggerNote');
+    wrap.appendChild(note);
+
+    TRIGGER_KEYS.forEach(function (key) {
+      var label = t(key);
+      var chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'ob-chip' + (triggers.indexOf(label) >= 0 ? ' is-selected' : '');
+      chip.textContent = label;
+      chip.addEventListener('click', function () {
+        var idx = triggers.indexOf(label);
+        if (idx >= 0) {
+          triggers.splice(idx, 1);
+          chip.classList.remove('is-selected');
+        } else {
+          triggers.push(label);
+          chip.classList.add('is-selected');
+        }
+      });
+      wrap.appendChild(chip);
+    });
+  }
+
+  function finish() {
+    var name = (el('obName') && el('obName').value.trim()) || '';
+    var city = (el('obCity') && el('obCity').value.trim()) || '';
+    var cpd = parseInt(el('obCpd') && el('obCpd').value, 10) || 20;
+    var pp = parseInt(el('obPp') && el('obPp').value, 10) || 600;
+    var yrs = parseInt(el('obYrs') && el('obYrs').value, 10) || 1;
+    var qd = (el('obQuitDate') && el('obQuitDate').value) || todayISO();
+
+    if (name) LS.set('userName', name);
+    if (city) LS.set('userCity', city);
+    LS.set('cigsPerDay', cpd);
+    LS.set('packPrice', pp);
+    LS.set('cigsPerPack', 20);
+    LS.set('smokingYears', yrs);
+    LS.set('quitDate', qd);
+    if (quitVal) LS.set('quitDecision', quitVal);
+    if (motivVal) LS.set('motivation', motivVal);
+    if (triggers.length) LS.set('triggers', triggers);
+    LS.set('onboardingDone', true);
+
+    var overlay = el('obOverlay');
+    if (overlay) {
+      overlay.classList.add('is-closing');
+      setTimeout(function () {
+        overlay.style.display = 'none';
+        overlay.classList.remove('is-closing');
+      }, 400);
+    }
+
+    showToast(t('onboarding.toastDone'));
+    if (typeof window.refreshDashboard === 'function') refreshDashboard();
+    var user = getCurrentUser && getCurrentUser();
+    if (user) syncToCloud(user);
+  }
+
+  function next() {
+    if (step < TOTAL - 1) {
+      step++;
+      showStep(step);
+      updateHeader();
+    } else {
+      finish();
+    }
+  }
+
+  function back() {
+    if (step > 0) {
+      step--;
+      showStep(step);
+      updateHeader();
+    }
+  }
+
+  function applyStaticLabels() {
+    applyI18nDOM();
+    if (el('obWelcomeH')) el('obWelcomeH').textContent = t('onboarding.welcome.title');
+    if (el('obWelcomeP')) el('obWelcomeP').textContent = t('onboarding.welcome.body');
+    if (el('obNameLabel')) el('obNameLabel').textContent = t('onboarding.name');
+    if (el('obName')) el('obName').placeholder = t('onboarding.namePh');
+    if (el('obCityLabel')) el('obCityLabel').textContent = t('onboarding.city');
+    if (el('obCity')) el('obCity').placeholder = t('onboarding.cityPh');
+    if (el('obCpdLabel')) el('obCpdLabel').textContent = t('onboarding.cpd');
+    if (el('obPpLabel')) el('obPpLabel').textContent = t('onboarding.packPrice');
+    if (el('obYrsLabel')) el('obYrsLabel').textContent = t('onboarding.years');
+    if (el('obQuitDateLabel')) el('obQuitDateLabel').textContent = t('onboarding.quitDate');
+  }
+
+  window.SaansOnboarding = {
+    init: function () {
+      if (LS.get('onboardingDone', false)) {
+        var overlay = el('obOverlay');
+        if (overlay) overlay.style.display = 'none';
+        return;
+      }
+      if (el('obQuitDate')) el('obQuitDate').value = todayISO();
+      applyStaticLabels();
+      showStep(0);
+      updateHeader();
+
+      if (el('obNextBtn')) el('obNextBtn').addEventListener('click', next);
+      if (el('obBackBtn')) el('obBackBtn').addEventListener('click', back);
+      if (el('obSkipBtn')) el('obSkipBtn').addEventListener('click', finish);
+
+      onLangChange(function () {
+        applyStaticLabels();
+        updateHeader();
+        showStep(step);
+      });
+    },
+    restart: function () {
+      LS.set('onboardingDone', false);
+      step = 0;
+      quitVal = '';
+      motivVal = '';
+      triggers = [];
+      var overlay = el('obOverlay');
+      if (overlay) overlay.style.display = 'flex';
+      applyStaticLabels();
+      showStep(0);
+      updateHeader();
+    },
+  };
+})();

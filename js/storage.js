@@ -51,7 +51,7 @@
     CIGS_PER_PACK: 'cigsPerPack',
     CHECKINS: 'checkins',
     USER_NAME: 'userName',
-    ONBOARDING_DONE: 'onboardingComplete',
+    ONBOARDING_DONE: 'onboardingDone',
     ONBOARDING_DATA: 'onboardingData',
     EARNED_BADGES: 'earnedBadges',
     CHAT_HISTORY: 'chatHistory',
