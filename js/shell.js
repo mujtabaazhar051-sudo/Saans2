@@ -37,7 +37,7 @@
       SaansBottomNav.mount();
     }
 
-    if (cfg.chat) {
+    if (cfg.chat && document.body.getAttribute('data-page') !== 'chat') {
       SaansChatBubble.mount();
     }
 
