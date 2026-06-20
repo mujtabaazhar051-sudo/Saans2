@@ -1,0 +1,78 @@
+/* Saans — base styles & language direction */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Urdu (default) */
+html[lang="ur"] body {
+  font-family: var(--font-urdu);
+  line-height: var(--leading-urdu);
+}
+
+html[lang="ur"] .ui-latin,
+html[lang="ur"] .stat-num,
+html[lang="ur"] input,
+html[lang="ur"] button.ui-btn {
+  font-family: var(--font-ui);
+  line-height: var(--leading-normal);
+}
+
+/* English mode */
+html[lang="en"] body {
+  font-family: var(--font-ui);
+  line-height: var(--leading-normal);
+}
+
+html[dir="rtl"] { text-align: right; }
+html[dir="ltr"] { text-align: left; }
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--color-primary-mid);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-primary);
+}
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary-mid);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

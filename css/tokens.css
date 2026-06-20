@@ -1,0 +1,90 @@
+/* Saans — design tokens (wellness / quit-smoking app benchmark) */
+:root {
+  /* Brand — teal / sage / coral (not legacy green) */
+  --color-primary:       #0D4F4F;
+  --color-primary-mid:   #2A9D8F;
+  --color-primary-light: #E8F4F2;
+  --color-accent:        #E07A5F;
+  --color-accent-hover:  #C96850;
+  --color-success:       #52B788;
+  --color-success-light: #E6F5ED;
+  --color-warning:       #F4A261;
+  --color-danger:        #E63946;
+
+  /* Surfaces */
+  --color-bg:            #F8F7F4;
+  --color-surface:       #FFFFFF;
+  --color-surface-alt:   #F0EFEB;
+  --color-border:        #E5E4DF;
+  --color-border-light:  #EEECE7;
+
+  /* Text */
+  --color-text:          #1C1C1E;
+  --color-text-muted:    #6B6B70;
+  --color-text-inverse:  #FFFFFF;
+  --color-text-on-primary: rgba(255, 255, 255, 0.92);
+
+  /* Typography */
+  --font-urdu:           'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  --font-ui:             'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-display:        var(--font-ui);
+
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  2rem;
+  --text-4xl:  2.75rem;
+  --text-5xl:  3.5rem;
+
+  --leading-tight:  1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+  --leading-urdu:   2;
+
+  /* Spacing */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Layout shell — single source of truth (prevents footer-gap bugs) */
+  --header-h:        60px;
+  --bottom-nav-h:    64px;
+  --safe-bottom:     env(safe-area-inset-bottom, 0px);
+  --shell-max-w:     1200px;
+  --content-max-w:   720px;
+
+  /* Radius */
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm:  0 1px 3px rgba(13, 79, 79, 0.06);
+  --shadow-md:  0 4px 20px rgba(13, 79, 79, 0.08);
+  --shadow-lg:  0 12px 40px rgba(13, 79, 79, 0.12);
+
+  /* Motion */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast:   150ms;
+  --duration-normal: 250ms;
+  --duration-slow:   400ms;
+
+  /* Z-index scale */
+  --z-header:     1000;
+  --z-bottom-nav: 900;
+  --z-chat:       950;
+  --z-overlay:    8000;
+  --z-toast:      9000;
+}

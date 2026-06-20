@@ -1,0 +1,69 @@
+/* Saans — page shell & layout (no min-height hacks on inner panels) */
+
+.page-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.page-shell--app {
+  padding-bottom: calc(var(--bottom-nav-h) + var(--safe-bottom));
+}
+
+.page-main {
+  flex: 1 0 auto;
+  width: 100%;
+  max-width: var(--shell-max-w);
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+.page-main--full {
+  max-width: none;
+  padding-inline: 0;
+}
+
+.page-main--narrow {
+  max-width: var(--content-max-w);
+}
+
+/* Offset for fixed header */
+.has-header .page-main {
+  padding-top: var(--space-6);
+}
+
+/* Dashboard two-region layout (Phase 2+) */
+.dash-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 300px) 1fr;
+  gap: 0;
+  align-items: start;
+}
+
+.dash-sidebar {
+  position: sticky;
+  top: var(--header-h);
+  align-self: start;
+  max-height: calc(100dvh - var(--header-h));
+  overflow-y: auto;
+}
+
+.dash-content {
+  padding: var(--space-6) var(--space-6) var(--space-10);
+  min-height: 0; /* never force viewport fill */
+}
+
+@media (max-width: 768px) {
+  .dash-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-sidebar {
+    position: static;
+    max-height: none;
+  }
+
+  .dash-content {
+    padding: var(--space-4);
+  }
+}
