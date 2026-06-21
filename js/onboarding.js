@@ -10,6 +10,7 @@
   var motivVal = '';
   var triggers = [];
   var wired = false;
+  var mounted = false;
 
   var QUIT_OPTS = [
     { val: 'decided', icon: '✅', key: 'onboarding.quit.decided' },
@@ -45,6 +46,23 @@
   ];
 
   function el(id) { return document.getElementById(id); }
+
+  function mountOverlay() {
+    if (el('obOverlay')) return true;
+    var tpl = document.getElementById('obTemplate');
+    if (!tpl || !tpl.content) return false;
+    document.body.insertBefore(tpl.content.cloneNode(true), document.body.firstChild);
+    mounted = true;
+    wired = false;
+    return true;
+  }
+
+  function unmountOverlay() {
+    var overlay = el('obOverlay');
+    if (overlay) overlay.remove();
+    mounted = false;
+    wired = false;
+  }
 
   function hideOverlay() {
     var overlay = el('obOverlay');
@@ -164,7 +182,10 @@
     var overlay = el('obOverlay');
     if (overlay) {
       overlay.classList.add('is-closing');
-      setTimeout(hideOverlay, 400);
+      setTimeout(function () {
+        hideOverlay();
+        unmountOverlay();
+      }, 400);
     }
 
     if (typeof window.showOnboardingSuccess === 'function') {
@@ -221,23 +242,23 @@
 
   window.SaansOnboarding = {
     init: function () {
-      wireButtons();
-
       if (isOnboardingComplete()) {
-        hideOverlay();
         return;
       }
 
-      showOverlay();
+      if (!mountOverlay()) return;
 
+      wireButtons();
       if (el('obQuitDate')) el('obQuitDate').value = todayISO();
       applyStaticLabels();
       showStep(0);
       updateHeader();
+      showOverlay();
 
       if (!window._obLangHook) {
         window._obLangHook = true;
         onLangChange(function () {
+          if (!el('obOverlay')) return;
           applyStaticLabels();
           updateHeader();
           showStep(step);
@@ -250,8 +271,11 @@
       quitVal = '';
       motivVal = '';
       triggers = [];
+      unmountOverlay();
+      if (!mountOverlay()) return;
       wireButtons();
       showOverlay();
+      if (el('obQuitDate')) el('obQuitDate').value = todayISO();
       applyStaticLabels();
       showStep(0);
       updateHeader();
