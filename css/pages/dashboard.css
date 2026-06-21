@@ -415,6 +415,30 @@
 
 .dash-confetti.is-visible { display: block; }
 
+[data-theme="dark"] .dash-success-banner {
+  background: linear-gradient(135deg, #1a3330 0%, #1e3d38 100%);
+}
+
+[data-theme="dark"] .dash-sidebar {
+  background: linear-gradient(180deg, #0a2e2e 0%, #0D4F4F 55%, #1a6b63 100%);
+}
+
+[data-theme="dark"] .dash-quote,
+[data-theme="dark"] .dash-craving {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .dt-card {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .weekly-summary {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+}
+
 .dash-confetti__piece {
   position: absolute;
   top: -20px;

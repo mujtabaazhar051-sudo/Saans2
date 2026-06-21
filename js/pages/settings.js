@@ -79,10 +79,25 @@
 
   window.SaansPages = window.SaansPages || {};
 
+  function updateThemeUI() {
+    var theme = typeof SaansTheme !== 'undefined' ? SaansTheme.get() : 'light';
+    var lbl = T.el('stThemeLabel');
+    if (lbl) lbl.textContent = theme === 'dark' ? t('theme.light') : t('theme.dark');
+  }
+
   SaansPages.settings = function () {
     requireAuth(function (user) {
       showAccount(user);
       loadValues();
+      updateThemeUI();
+
+      var themeBtn = T.el('stThemeBtn');
+      if (themeBtn && typeof SaansTheme !== 'undefined') {
+        themeBtn.addEventListener('click', function () {
+          SaansTheme.toggle();
+          updateThemeUI();
+        });
+      }
 
       T.el('stSaveProfile').addEventListener('click', function () {
         LS.set('userName', T.el('stName').value.trim());
@@ -160,7 +175,7 @@
         setTimeout(function () { window.location.href = saansHref('dashboard.html'); }, 800);
       });
 
-      SaansTools.onLang(function () { applyI18nDOM(); loadValues(); });
+      SaansTools.onLang(function () { applyI18nDOM(); loadValues(); updateThemeUI(); });
     });
   };
 })();

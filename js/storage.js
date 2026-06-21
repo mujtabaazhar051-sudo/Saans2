@@ -71,4 +71,11 @@
   };
 
   window.LS = LS;
+
+  try {
+    var rawTheme = localStorage.getItem(prefix('theme'));
+    if (rawTheme === '"dark"' || rawTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  } catch (_) { /* ignore */ }
 })();

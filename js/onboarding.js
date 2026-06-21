@@ -222,14 +222,22 @@
 
   window.SaansOnboardingNext = next;
   window.SaansOnboardingBack = back;
-  window.SaansOnboardingSkip = finish;
+  window.SaansOnboardingSkip = function () {
+    if (step < TOTAL - 1) {
+      step++;
+      showStep(step);
+      updateHeader();
+    } else {
+      finish();
+    }
+  };
 
   function wireButtons() {
     if (wired) return;
     wired = true;
     if (el('obNextBtn')) el('obNextBtn').addEventListener('click', next);
     if (el('obBackBtn')) el('obBackBtn').addEventListener('click', back);
-    if (el('obSkipBtn')) el('obSkipBtn').addEventListener('click', finish);
+    if (el('obSkipBtn')) el('obSkipBtn').addEventListener('click', window.SaansOnboardingSkip);
   }
 
   function applyStaticLabels() {

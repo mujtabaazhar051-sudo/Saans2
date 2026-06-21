@@ -24,6 +24,9 @@
           <h1 class="tool-title" data-i18n="nicotine.title"></h1>
           <p class="tool-subtitle" data-i18n="nicotine.sub"></p>
         </header>
+
+        <div class="nrt-warning ui-card--tool" id="nrWarning"></div>
+
         <div class="tool-form-grid">
           <div class="ui-card--tool">
             <h3 id="nrGumTitle"></h3>
@@ -35,16 +38,31 @@
             <p><strong data-i18n="nicotine.pros"></strong>: <span id="nrPatchPros"></span></p>
             <p><strong data-i18n="nicotine.cons"></strong>: <span id="nrPatchCons"></span></p>
           </div>
+          <div class="ui-card--tool">
+            <h3 id="nrLozTitle"></h3>
+            <p><strong data-i18n="nicotine.pros"></strong>: <span id="nrLozPros"></span></p>
+            <p><strong data-i18n="nicotine.cons"></strong>: <span id="nrLozCons"></span></p>
+          </div>
         </div>
+
+        <div class="ui-card--tool" style="margin-top:var(--space-5);">
+          <h2 class="tool-section-title" id="nrMedsTitle"></h2>
+          <p class="settings-hint" data-i18n="nicotine.medsHint"></p>
+          <div class="nrt-med-list" id="nrMedsList"></div>
+        </div>
+
         <div class="ui-card--tool" style="margin-top:var(--space-5);">
           <h2 class="tool-section-title" data-i18n="nicotine.quizTitle"></h2>
+          <p class="settings-hint" data-i18n="nicotine.quizHint"></p>
           <button type="button" class="ui-btn ui-btn--primary" id="nrQuizStart" data-i18n="nicotine.quizStart"></button>
           <div id="nrQuiz" style="display:none;margin-top:var(--space-4);">
+            <div class="tr-quiz-step" id="nrQuizStep"></div>
             <p id="nrQuizQ" style="font-weight:600;margin-bottom:var(--space-3);"></p>
             <div id="nrQuizOpts" style="display:flex;flex-direction:column;gap:var(--space-2);"></div>
           </div>
           <div id="nrResult" style="display:none;margin-top:var(--space-4);">
             <p id="nrResultText" style="font-weight:600;margin-bottom:var(--space-3);"></p>
+            <p id="nrResultWarn" class="nrt-warning-inline"></p>
             <button type="button" class="ui-btn ui-btn--secondary" id="nrQuizRestart" data-i18n="nicotine.quizRestart"></button>
           </div>
         </div>
@@ -55,14 +73,15 @@
   <script src="js/translations.js"></script>
   <script src="js/i18n.js"></script>
   <script src="js/storage.js"></script>
-  <script src="js/data/content.js"></script>
-  <script src="js/pages/tools-common.js"></script>
-  <script src="js/header.js?v=5"></script>
-  <script src="js/footer.js?v=5"></script>
-  <script src="js/bottom-nav.js?v=5"></script>
-  <script src="js/chat-bubble.js?v=5"></script>
-  <script src="js/shell.js?v=5"></script>
-  <script src="js/pages/nicotine.js?v=5"></script>
-  <script src="js/bootstrap.js?v=5"></script>
+  <script src="js/theme.js?v=12"></script>
+  <script src="js/data/content.js?v=12"></script>
+  <script src="js/pages/tools-common.js?v=12"></script>
+  <script src="js/header.js?v=12"></script>
+  <script src="js/footer.js?v=12"></script>
+  <script src="js/bottom-nav.js?v=12"></script>
+  <script src="js/chat-bubble.js?v=12"></script>
+  <script src="js/shell.js?v=12"></script>
+  <script src="js/pages/nicotine.js?v=12"></script>
+  <script src="js/bootstrap.js?v=12"></script>
 </body>
 </html>

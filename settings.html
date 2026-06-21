@@ -87,6 +87,20 @@
           </div>
         </div>
 
+        <!-- Appearance -->
+        <div class="settings-card">
+          <div class="settings-card__head">🌓 <span data-i18n="theme.title"></span></div>
+          <div class="settings-card__body">
+            <div class="settings-toggle-row">
+              <div>
+                <div style="font-weight:600;font-size:var(--text-sm);" data-i18n="theme.label"></div>
+                <p class="settings-hint" data-i18n="theme.hint"></p>
+              </div>
+              <button type="button" class="ui-btn ui-btn--primary" id="stThemeBtn"><span data-theme-icon>🌙</span> <span id="stThemeLabel" data-i18n="theme.dark"></span></button>
+            </div>
+          </div>
+        </div>
+
         <!-- Notifications -->
         <div class="settings-card">
           <div class="settings-card__head">🔔 <span data-i18n="settings.notif"></span></div>
@@ -145,19 +159,20 @@
   <script src="js/translations.js"></script>
   <script src="js/i18n.js"></script>
   <script src="js/storage.js"></script>
+  <script src="js/theme.js?v=12"></script>
   <script src="js/stats.js"></script>
   <script src="js/pages/tools-common.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script src="js/firebase.js?v=6"></script>
-  <script src="js/auth.js?v=6"></script>
-  <script src="js/header.js?v=6"></script>
-  <script src="js/footer.js?v=6"></script>
-  <script src="js/bottom-nav.js?v=6"></script>
-  <script src="js/chat-bubble.js?v=6"></script>
-  <script src="js/shell.js?v=6"></script>
-  <script src="js/pages/settings.js?v=6"></script>
-  <script src="js/bootstrap.js?v=6"></script>
+  <script src="js/firebase.js?v=12"></script>
+  <script src="js/auth.js?v=12"></script>
+  <script src="js/header.js?v=12"></script>
+  <script src="js/footer.js?v=12"></script>
+  <script src="js/bottom-nav.js?v=12"></script>
+  <script src="js/chat-bubble.js?v=12"></script>
+  <script src="js/shell.js?v=12"></script>
+  <script src="js/pages/settings.js?v=12"></script>
+  <script src="js/bootstrap.js?v=12"></script>
 </body>
 </html>

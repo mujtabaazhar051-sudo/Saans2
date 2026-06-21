@@ -41,11 +41,6 @@
 
   function greetingTime(lang) {
     var h = new Date().getHours();
-    if (lang === 'ur') {
-      if (h < 12) return t('dashboard.greet.morning');
-      if (h < 17) return t('dashboard.greet.afternoon');
-      return t('dashboard.greet.evening');
-    }
     if (h < 12) return t('dashboard.greet.morning');
     if (h < 17) return t('dashboard.greet.afternoon');
     return t('dashboard.greet.evening');
@@ -76,7 +71,6 @@
       btn._wired = true;
       btn.addEventListener('click', function () {
         banner.hidden = true;
-        LS.set('onboardingSuccess', false);
       });
     }
   }
@@ -118,23 +112,23 @@
     var wrap = $('weeklySummary');
     if (!wrap) return;
     var qd = LS.get('quitDate', '');
-    var today = new Date();
-    today.setHours(0, 0, 0, 0);
-    var dow = today.getDay();
 
-    if (!qd || dow < 3) {
+    if (!qd) {
       wrap.classList.remove('is-visible');
       return;
     }
     wrap.classList.add('is-visible');
 
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    var dow = today.getDay();
     var checkins = LS.get('checkins', {});
     var quitDate = new Date(qd + 'T00:00:00');
     var weekDays = [];
     for (var i = 0; i < 7; i++) {
       var d = new Date(today);
       d.setDate(today.getDate() - dow + i);
-      weekDays.push({ date: d, iso: d.toISOString().slice(0, 10), dayIdx: i });
+      weekDays.push({ date: d, iso: localDateISO(d), dayIdx: i });
     }
 
     var cleanDays = 0;
@@ -160,7 +154,7 @@
 
     var row = $('wsDaysRow');
     row.innerHTML = '';
-    var todayIso = today.toISOString().slice(0, 10);
+    var todayIso = localDateISO(today);
     weekDays.forEach(function (wd) {
       var dot = document.createElement('div');
       var cls = 'ws-day ws-day--empty';
@@ -196,7 +190,6 @@
   }
 
   window.logCheckin = function (smokeFree) {
-    var lang = getLang();
     var checkins = LS.get('checkins', {});
     checkins[todayISO()] = smokeFree;
     LS.set('checkins', checkins);
@@ -209,9 +202,7 @@
     showToast(smokeFree ? t('dashboard.checkin.toastYes') : t('dashboard.checkin.toastNo'));
     if (smokeFree) launchConfetti();
     refreshDashboard();
-
-    var user = getCurrentUser && getCurrentUser();
-    if (user) syncToCloud(user);
+    SaansTools.syncCloud();
   };
 
   window.refreshDashboard = function () {
@@ -225,26 +216,38 @@
     var todayLogged = Object.prototype.hasOwnProperty.call(checkins, todayISO());
 
     var greet = greetingTime(lang);
-    $('dashGreeting').textContent = name ? greet + '، ' + name + ' 👋' : greet + ' 👋';
-    $('dashDays').textContent = days;
-    $('dashDaysLabel').textContent = t('dashboard.daysLabel');
-    $('qsStreak').textContent = streak;
-    $('qsSaved').textContent = formatPKR(savings);
-    $('dashBadges').textContent = badges;
+    var greetEl = $('dashGreeting');
+    if (greetEl) {
+      greetEl.textContent = name ? greet + '، ' + name + ' 👋' : greet + ' 👋';
+    }
 
-    if (todayLogged) {
-      $('checkinBtns').style.display = 'none';
-      $('checkinDone').style.display = 'flex';
-      $('checkinDoneText').textContent = checkins[todayISO()] === true
-        ? t('dashboard.checkin.alreadyYes')
-        : t('dashboard.checkin.alreadyNo');
-    } else {
-      $('checkinBtns').style.display = 'flex';
-      $('checkinDone').style.display = 'none';
+    var daysEl = $('dashDays');
+    if (daysEl) daysEl.textContent = days;
+    var daysLabel = $('dashDaysLabel');
+    if (daysLabel) daysLabel.textContent = t('dashboard.daysLabel');
+    var streakEl = $('qsStreak');
+    if (streakEl) streakEl.textContent = streak;
+    var savedEl = $('qsSaved');
+    if (savedEl) savedEl.textContent = formatPKR(savings);
+    var badgesEl = $('dashBadges');
+    if (badgesEl) badgesEl.textContent = badges;
+
+    if ($('checkinBtns') && $('checkinDone')) {
+      if (todayLogged) {
+        $('checkinBtns').style.display = 'none';
+        $('checkinDone').style.display = 'flex';
+        $('checkinDoneText').textContent = checkins[todayISO()] === true
+          ? t('dashboard.checkin.alreadyYes')
+          : t('dashboard.checkin.alreadyNo');
+      } else {
+        $('checkinBtns').style.display = 'flex';
+        $('checkinDone').style.display = 'none';
+      }
     }
 
     var quoteKeys = QUOTES[lang] || QUOTES.en;
-    $('dqText').textContent = t(quoteKeys[days % quoteKeys.length]);
+    var dq = $('dqText');
+    if (dq) dq.textContent = t(quoteKeys[days % quoteKeys.length]);
 
     updateProgressRing(days);
     updateNextMilestone(days, lang);
@@ -253,39 +256,53 @@
     applyI18nDOM();
   };
 
+  function bootDashboard(user) {
+    SaansOnboarding.init();
+    showOnboardingSuccessBanner();
+    refreshDashboard();
+
+    if (!user || typeof syncFromCloud !== 'function') return;
+
+    syncFromCloud(user).finally(function () {
+      refreshDashboard();
+      if (typeof syncToCloud === 'function') syncToCloud(user);
+    });
+  }
+
   window.SaansPages = window.SaansPages || {};
 
   SaansPages.dashboard = function () {
     document.documentElement.classList.remove('saans-booting');
     initAnalytics();
     buildToolsGrid();
+    refreshDashboard();
 
-    $('setupSaveBtn').addEventListener('click', function () {
-      var val = $('quitDateInput').value;
-      if (!val) return;
-      LS.set('quitDate', val);
-      refreshSetupBar();
-      refreshDashboard();
-      showToast(t('dashboard.quitDateSaved'));
-      var user = getCurrentUser && getCurrentUser();
-      if (user) syncToCloud(user);
-    });
-
-    $('waShareBtn').addEventListener('click', function () {
-      shareOnWhatsApp('dashboard');
-    });
-
-    requireAuth(function (user) {
-      syncFromCloud(user).finally(function () {
-        SaansOnboarding.init();
-        showOnboardingSuccessBanner();
+    var setupBtn = $('setupSaveBtn');
+    if (setupBtn) {
+      setupBtn.addEventListener('click', function () {
+        var val = $('quitDateInput').value;
+        if (!val) return;
+        LS.set('quitDate', val);
+        LS.set('onboardingDone', true);
+        refreshSetupBar();
         refreshDashboard();
-        syncToCloud(user);
+        showToast(t('dashboard.quitDateSaved'));
+        SaansTools.syncCloud();
       });
-    });
+    }
 
-    onLangChange(function () {
-      refreshDashboard();
+    var waBtn = $('waShareBtn');
+    if (waBtn) waBtn.addEventListener('click', function () { shareOnWhatsApp('dashboard'); });
+
+    requireAuth(bootDashboard, { offlineOk: true });
+
+    onLangChange(function () { refreshDashboard(); });
+
+    window.addEventListener('pageshow', function (ev) {
+      if (ev.persisted) refreshDashboard();
+    });
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) refreshDashboard();
     });
   };
 })();

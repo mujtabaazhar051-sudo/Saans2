@@ -4,6 +4,7 @@
   --color-primary:       #0D4F4F;
   --color-primary-mid:   #2A9D8F;
   --color-primary-light: #E8F4F2;
+  --color-primary-subtle: #E8F4F2;
   --color-accent:        #E07A5F;
   --color-accent-hover:  #C96850;
   --color-success:       #52B788;
@@ -87,4 +88,33 @@
   --z-chat:       950;
   --z-overlay:    8000;
   --z-toast:      9000;
+}
+
+/* Dark mode */
+[data-theme="dark"] {
+  --color-primary:       #3db8a8;
+  --color-primary-mid:   #2A9D8F;
+  --color-primary-light: #1a3330;
+  --color-primary-subtle: #1a3330;
+  --color-accent:        #E07A5F;
+  --color-accent-hover:  #C96850;
+  --color-success:       #52B788;
+  --color-success-light: #1a2e24;
+  --color-warning:       #F4A261;
+  --color-danger:        #E63946;
+
+  --color-bg:            #121416;
+  --color-surface:       #1e2124;
+  --color-surface-alt:   #25282c;
+  --color-border:        #33363a;
+  --color-border-light:  #2a2d31;
+
+  --color-text:          #ececec;
+  --color-text-muted:    #9a9aa0;
+  --color-text-inverse:  #FFFFFF;
+  --color-text-on-primary: rgba(255, 255, 255, 0.92);
+
+  --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md:  0 4px 20px rgba(0, 0, 0, 0.35);
+  --shadow-lg:  0 12px 40px rgba(0, 0, 0, 0.45);
 }

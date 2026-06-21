@@ -430,5 +430,94 @@
   border: 1px solid var(--color-border);
 }
 .buy-card.is-unlocked { border-color: var(--color-success); background: #f0faf5; }
+[data-theme="dark"] .buy-card.is-unlocked { background: #1a2e24; }
 .buy-card.is-locked { opacity: 0.55; }
 .buy-card__icon { font-size: 1.75rem; display: block; margin-bottom: var(--space-2); }
+
+/* NRT */
+.nrt-warning {
+  background: #fff3e0;
+  border: 1px solid var(--color-warning);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  margin-bottom: var(--space-5);
+}
+[data-theme="dark"] .nrt-warning { background: #3a2e1a; }
+.nrt-warning-inline {
+  font-size: var(--text-sm);
+  color: var(--color-danger);
+  margin-bottom: var(--space-3);
+}
+.nrt-med-list { display: grid; gap: var(--space-3); margin-top: var(--space-3); }
+.nrt-med-card {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+}
+.nrt-med-card__name { font-weight: 700; font-size: var(--text-sm); margin-bottom: 4px; }
+.nrt-med-card__desc { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.5; }
+.nrt-rx-badge {
+  font-size: var(--text-xs);
+  background: var(--color-danger);
+  color: white;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  margin-inline-start: 6px;
+}
+#nrQuizQ.is-warning { color: var(--color-danger); }
+.tr-quiz-step { font-size: var(--text-xs); color: var(--color-text-muted); margin-bottom: var(--space-2); }
+
+/* Tracker improvements */
+.tracker-checkin-btns { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+.tracker-today-done {
+  font-weight: 700;
+  color: var(--color-success);
+  align-items: center;
+  gap: var(--space-2);
+}
+.dash-btn-yes, .dash-btn-no {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  border: none;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: var(--text-sm);
+}
+.dash-btn-yes { background: var(--color-success); color: white; }
+.dash-btn-no { background: var(--color-surface-alt); color: var(--color-text); border: 1px solid var(--color-border); }
+button.heatmap-cell {
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+button.heatmap-cell.is-future { cursor: default; }
+.heatmap-month-label {
+  font-size: 9px;
+  color: var(--color-text-muted);
+  height: 14px;
+  line-height: 14px;
+  margin-bottom: 2px;
+}
+.day-row__actions { display: flex; gap: var(--space-2); margin-inline-start: auto; flex-wrap: wrap; }
+
+.tracker-week-card { padding-bottom: var(--space-4); }
+.tracker-week-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--space-2); }
+.tracker-wday {
+  text-align: center;
+  padding: var(--space-2) var(--space-1);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  font-size: var(--text-xs);
+}
+.tracker-wday__label { display: block; font-weight: 600; margin-bottom: 4px; color: var(--color-text-muted); }
+.tracker-wday--clean { background: var(--color-success-light); border-color: var(--color-success); }
+.tracker-wday--smoked { background: #fdecea; border-color: #e57373; }
+[data-theme="dark"] .tracker-wday--smoked { background: #3a2222; }
+.tracker-wday--today { box-shadow: 0 0 0 2px var(--color-primary-mid); }
+.tracker-wday--empty { opacity: 0.7; }

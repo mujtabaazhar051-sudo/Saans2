@@ -2,7 +2,7 @@
  * Saans — service worker (Phase 6)
  * Cache-first for static assets; network-first for HTML pages.
  */
-var CACHE_NAME = 'saans2-v11';
+var CACHE_NAME = 'saans2-v12';
 var BASE = self.location.pathname.replace(/sw\.js(\?.*)?$/, '');
 
 function url(path) {
@@ -25,6 +25,7 @@ var PRECACHE = [
   url('js/translations.js'),
   url('js/i18n.js'),
   url('js/storage.js'),
+  url('js/theme.js'),
   url('js/stats.js'),
   url('js/bootstrap.js'),
   url('js/shell.js'),

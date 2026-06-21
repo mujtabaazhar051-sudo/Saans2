@@ -73,7 +73,19 @@
     },
 
     dateISO: function (d) {
-      return d.toISOString().slice(0, 10);
+      return typeof localDateISO === 'function' ? localDateISO(d) : d.toISOString().slice(0, 10);
+    },
+
+    syncCloud: function () {
+      var user = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+      if (user && typeof syncToCloud === 'function') syncToCloud(user);
+    },
+
+    saveCheckin: function (iso, smokeFree) {
+      var c = LS.get('checkins', {});
+      c[iso] = smokeFree;
+      LS.set('checkins', c);
+      SaansTools.syncCloud();
     },
 
     parseDate: function (iso) {
