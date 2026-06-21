@@ -143,7 +143,7 @@
   window.syncToCloud = async function (user) {
     if (!user || !_db) return;
     try {
-      await _db.collection('users').doc(user.uid).set({
+      var payload = {
         quitDate: LS.get('quitDate', ''),
         cigsPerDay: LS.get('cigsPerDay', 20),
         packPrice: LS.get('packPrice', 600),
@@ -156,10 +156,13 @@
         triggers: LS.get('triggers', []),
         checkins: LS.get('checkins', {}),
         earnedBadges: LS.get('earnedBadges', []),
-        onboardingDone: LS.get('onboardingDone', false),
         lang: getLang(),
         updatedAt: new Date().toISOString(),
-      }, { merge: true });
+      };
+      if (LS.get('onboardingDone', false)) {
+        payload.onboardingDone = true;
+      }
+      await _db.collection('users').doc(user.uid).set(payload, { merge: true });
     } catch (e) {
       console.warn('[Saans] Cloud sync failed:', e.message);
     }

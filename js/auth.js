@@ -20,8 +20,14 @@
     targetPage = targetPage || 'dashboard.html';
     onFirebaseReady(function () {
       onAuthChange(function (user) {
-        if (user) {
+        if (!user) return;
+        var go = function () {
           window.location.href = saansHref(targetPage);
+        };
+        if (typeof syncFromCloud === 'function') {
+          syncFromCloud(user).finally(go);
+        } else {
+          go();
         }
       });
     });

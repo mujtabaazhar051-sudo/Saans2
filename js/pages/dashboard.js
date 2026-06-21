@@ -274,10 +274,9 @@
     });
 
     requireAuth(function (user) {
-      SaansOnboarding.init();
-      showOnboardingSuccessBanner();
-      refreshDashboard();
       syncFromCloud(user).finally(function () {
+        SaansOnboarding.init();
+        showOnboardingSuccessBanner();
         refreshDashboard();
         syncToCloud(user);
       });

@@ -46,6 +46,27 @@
 
   function el(id) { return document.getElementById(id); }
 
+  function hideOverlay() {
+    var overlay = el('obOverlay');
+    if (!overlay) return;
+    overlay.classList.remove('is-visible', 'is-closing');
+  }
+
+  function showOverlay() {
+    var overlay = el('obOverlay');
+    if (!overlay) return;
+    overlay.classList.add('is-visible');
+  }
+
+  function isOnboardingComplete() {
+    if (LS.get('onboardingDone', false)) return true;
+    if (LS.get('quitDate', '')) {
+      LS.set('onboardingDone', true);
+      return true;
+    }
+    return false;
+  }
+
   function updateHeader() {
     var lang = getLang();
     if (el('obStepLabel')) el('obStepLabel').textContent = (step + 1) + ' / ' + TOTAL;
@@ -143,10 +164,7 @@
     var overlay = el('obOverlay');
     if (overlay) {
       overlay.classList.add('is-closing');
-      setTimeout(function () {
-        overlay.style.display = 'none';
-        overlay.classList.remove('is-closing');
-      }, 400);
+      setTimeout(hideOverlay, 400);
     }
 
     if (typeof window.showOnboardingSuccess === 'function') {
@@ -205,14 +223,12 @@
     init: function () {
       wireButtons();
 
-      if (LS.get('onboardingDone', false)) {
-        var overlay = el('obOverlay');
-        if (overlay) overlay.style.display = 'none';
+      if (isOnboardingComplete()) {
+        hideOverlay();
         return;
       }
 
-      var overlay = el('obOverlay');
-      if (overlay) overlay.style.display = 'flex';
+      showOverlay();
 
       if (el('obQuitDate')) el('obQuitDate').value = todayISO();
       applyStaticLabels();
@@ -235,8 +251,7 @@
       motivVal = '';
       triggers = [];
       wireButtons();
-      var overlay = el('obOverlay');
-      if (overlay) overlay.style.display = 'flex';
+      showOverlay();
       applyStaticLabels();
       showStep(0);
       updateHeader();
