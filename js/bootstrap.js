@@ -33,6 +33,6 @@
 (function () {
   if (location.protocol === 'file:') return;
   var s = document.createElement('script');
-  s.src = (typeof saansPath === 'function' ? saansPath('js/pwa.js') : 'js/pwa.js') + '?v=10';
+  s.src = (typeof saansPath === 'function' ? saansPath('js/pwa.js') : 'js/pwa.js') + '?v=11';
   document.body.appendChild(s);
 })();
