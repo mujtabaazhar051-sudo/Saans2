@@ -15,12 +15,20 @@
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/pages/onboarding.css">
   <link rel="stylesheet" href="css/pages/dashboard.css">
+  <style>
+    /* Prevent green sidebar / overlay flash before JS boot completes */
+    html.saans-booting .dash-sidebar,
+    html.saans-booting .dash-success-banner { visibility: hidden; }
+  </style>
+  <script>
+    document.documentElement.classList.add('saans-booting');
+  </script>
 </head>
 <body data-page="dashboard" data-shell="app">
 
   <!-- Onboarding wizard (inert until JS mounts it for new users) -->
   <template id="obTemplate">
-  <div class="ob-overlay is-visible" id="obOverlay">
+  <div class="ob-overlay" id="obOverlay">
     <div class="ob-card">
       <div class="ob-progress"><div class="ob-progress__bar" id="obProgressBar" style="width:0%"></div></div>
       <div class="ob-header">
@@ -176,16 +184,16 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script src="js/firebase.js?v=9"></script>
-  <script src="js/analytics.js?v=9"></script>
-  <script src="js/auth.js?v=9"></script>
-  <script src="js/onboarding.js?v=9"></script>
-  <script src="js/header.js?v=9"></script>
-  <script src="js/footer.js?v=9"></script>
-  <script src="js/bottom-nav.js?v=9"></script>
-  <script src="js/chat-bubble.js?v=9"></script>
-  <script src="js/shell.js?v=9"></script>
-  <script src="js/pages/dashboard.js?v=9"></script>
-  <script src="js/bootstrap.js?v=9"></script>
+  <script src="js/firebase.js?v=10"></script>
+  <script src="js/analytics.js?v=10"></script>
+  <script src="js/auth.js?v=10"></script>
+  <script src="js/onboarding.js?v=10"></script>
+  <script src="js/header.js?v=10"></script>
+  <script src="js/footer.js?v=10"></script>
+  <script src="js/bottom-nav.js?v=10"></script>
+  <script src="js/chat-bubble.js?v=10"></script>
+  <script src="js/shell.js?v=10"></script>
+  <script src="js/pages/dashboard.js?v=10"></script>
+  <script src="js/bootstrap.js?v=10"></script>
 </body>
 </html>

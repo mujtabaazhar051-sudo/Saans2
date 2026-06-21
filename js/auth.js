@@ -6,9 +6,14 @@
 
   window.requireAuth = function (callback) {
     onFirebaseReady(function () {
+      var done = false;
       onAuthChange(function (user) {
         if (user) {
+          if (done) return;
+          done = true;
           callback(user);
+        } else if (done) {
+          window.location.href = saansHref('login.html');
         } else {
           window.location.href = saansHref('login.html');
         }

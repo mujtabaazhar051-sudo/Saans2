@@ -66,6 +66,7 @@
 
   function showOnboardingSuccessBanner() {
     if (!LS.get('onboardingSuccess', false)) return;
+    LS.set('onboardingSuccess', false);
     var banner = $('onboardingSuccessBanner');
     if (!banner) return;
     banner.hidden = false;
@@ -254,6 +255,10 @@
 
   window.SaansPages = window.SaansPages || {};
 
+  function finishDashboardBoot() {
+    document.documentElement.classList.remove('saans-booting');
+  }
+
   SaansPages.dashboard = function () {
     initAnalytics();
     buildToolsGrid();
@@ -278,6 +283,7 @@
         SaansOnboarding.init();
         showOnboardingSuccessBanner();
         refreshDashboard();
+        finishDashboardBoot();
         syncToCloud(user);
       });
     });

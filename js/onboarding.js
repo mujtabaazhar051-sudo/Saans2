@@ -82,6 +82,12 @@
       LS.set('onboardingDone', true);
       return true;
     }
+    var name = LS.get('userName', '');
+    var checkins = LS.get('checkins', {});
+    if (name && checkins && Object.keys(checkins).length > 0) {
+      LS.set('onboardingDone', true);
+      return true;
+    }
     return false;
   }
 

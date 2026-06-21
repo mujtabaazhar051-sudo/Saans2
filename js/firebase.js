@@ -174,10 +174,25 @@
       var doc = await _db.collection('users').doc(user.uid).get();
       if (!doc.exists) return false;
       var data = doc.data();
-      ['quitDate', 'cigsPerDay', 'packPrice', 'cigsPerPack', 'smokingYears',
+      var keys = ['quitDate', 'cigsPerDay', 'packPrice', 'cigsPerPack', 'smokingYears',
         'userName', 'userCity', 'motivation', 'quitDecision', 'triggers',
-        'checkins', 'earnedBadges', 'onboardingDone'].forEach(function (k) {
-        if (data[k] !== undefined) LS.set(k, data[k]);
+        'checkins', 'earnedBadges', 'onboardingDone'];
+      keys.forEach(function (k) {
+        var v = data[k];
+        if (v === undefined) return;
+        if (k === 'onboardingDone') {
+          if (v === true) LS.set(k, true);
+          return;
+        }
+        var local = LS.get(k, null);
+        if (v === '' || v === null || v === false) {
+          if (local !== null && local !== '' && local !== false) return;
+        }
+        if (Array.isArray(v) && v.length === 0 && Array.isArray(local) && local.length > 0) return;
+        if (v && typeof v === 'object' && !Array.isArray(v) && Object.keys(v).length === 0) {
+          if (local && typeof local === 'object' && Object.keys(local).length > 0) return;
+        }
+        LS.set(k, v);
       });
       return true;
     } catch (e) {
